@@ -154,9 +154,13 @@ public class MonthGridAdapter extends BaseAdapter {
     }
 
     public void setAdapterDateTime(DateTime dateTime) {
-        this.mMonth = dateTime.getMonthOfYear();
-        this.mYear = dateTime.getYear();
-        mDateTimeList = CalendarUtils.getFullWeeks(this.mMonth, this.mYear, mStartDayOfWeek);
+        if(dateTime != null){
+            this.mMonth = dateTime.getMonthOfYear();
+            this.mYear = dateTime.getYear();
+            mDateTimeList = CalendarUtils.getFullWeeks(this.mMonth, this.mYear, mStartDayOfWeek);
+        }else{
+            mDateTimeList = CalendarUtils.getFullWeeks(this.mMonth, this.mYear, mStartDayOfWeek);
+        }
     }
 
     public List<DateTime> getDateTimeList() {

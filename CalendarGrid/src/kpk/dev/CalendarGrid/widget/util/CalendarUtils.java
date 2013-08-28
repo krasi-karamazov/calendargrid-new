@@ -77,15 +77,15 @@ public class CalendarUtils {
             endDayOfWeek = 7;
         }
 
-        if (lastDateOfMonth.getDayOfWeek() != endDayOfWeek) {
+        if (datetimeList.size() < 42) {
             int i = 1;
-            while (true) {
+            while (datetimeList.size() < 42) {
                 DateTime nextDay = lastDateOfMonth.plusDays(i);
                 datetimeList.add(nextDay);
                 i++;
-                if (nextDay.getDayOfWeek() == endDayOfWeek) {
+                /*if (nextDay.getDayOfWeek() == endDayOfWeek) {
                     break;
-                }
+                }*/
             }
         }
 

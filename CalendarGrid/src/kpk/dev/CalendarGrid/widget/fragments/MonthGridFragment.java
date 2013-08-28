@@ -85,12 +85,7 @@ public class MonthGridFragment extends Fragment {
 
     private Map<String, Object> getInternalData() {
 
-        mInternalData.clear();
-        mInternalData.put(Constants.DISABLED_DATES, null);
-        mInternalData.put(Constants.SELECTED_DATES, null);
-        mInternalData.put(Constants.MIN_DATE, null);
-        mInternalData.put(Constants.MIN_DATE, null);
-        mInternalData.put(Constants.START_DAY_OF_WEEK, DateTimeConstants.SUNDAY);
+
 
         /*// For internal use
         mInternalData.put(_BACKGROUND_FOR_DATETIME_MAP, backgroundForDateTimeMap);

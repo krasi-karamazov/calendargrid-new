@@ -41,12 +41,12 @@
     <file path="/CalendarGrid.java" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377265804662" ignored="false" />
     <file path="$PROJECT_DIR$/gen/kpk/dev/CalendarGrid/BuildConfig.java" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377274666583" ignored="false" />
     <file path="/GridAdapter.java" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377273953745" ignored="false" />
-    <file path="/CalendarUtils.java" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377271906161" ignored="false" />
+    <file path="/CalendarUtils.java" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377731029375" ignored="false" />
     <file path="/CalendarGridApplication.java" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377250622078" ignored="false" />
     <file path="/LogHelper.java" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377250576469" ignored="false" />
     <file path="/Dummy.txt" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377708561567" ignored="false" />
     <file path="/AndroidManifest.xml" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377273555000" ignored="false" />
-    <file path="/MyActivity.java" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377704942701" ignored="false" />
+    <file path="/MyActivity.java" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377728314278" ignored="false" />
     <file path="/main.xml" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377703907037" ignored="false" />
     <file path="/calendar_item_background_normal.xml" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377257944562" ignored="false" />
     <file path="/calendar_item.xml" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377266695551" ignored="false" />
@@ -59,13 +59,14 @@
     <file path="/calendar_item_backgorund_not_in_month.xml" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377273880779" ignored="false" />
     <file path="/MonthGridFragment.java" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377705703759" ignored="false" />
     <file path="/month_grid_fragment_layoout.xml" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377699186879" ignored="false" />
-    <file path="/MonthGridAdapter.java" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377706009644" ignored="false" />
+    <file path="/MonthGridAdapter.java" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377730228743" ignored="false" />
     <file path="/Constants.java" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377707403677" ignored="false" />
     <file path="/month_grid_fragment_layout.xml" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377706967398" ignored="false" />
-    <file path="/CalendarFragment.java" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377709129091" ignored="false" />
+    <file path="/CalendarFragment.java" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377731455069" ignored="false" />
     <file path="/InfiniteViewPager.java" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377708168297" ignored="false" />
     <file path="/InfinitePagerAdapter.java" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377707663159" ignored="false" />
-    <file path="/calendar_layout.xml" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377708634444" ignored="false" />
+    <file path="/calendar_layout.xml" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377730769007" ignored="false" />
+    <file path="/MonthPagerAdapter.java" changelist="211f0d08-b3e9-44bb-9a97-e62cbaf89a99" time="1377730391520" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,6 +81,83 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
+      <breakpoint url="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/fragments/CalendarFragment.java" line="35" class="kpk.dev.CalendarGrid.widget.fragments.CalendarFragment" package="kpk.dev.CalendarGrid.widget.fragments">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/fragments/CalendarFragment.java" line="163" class="kpk.dev.CalendarGrid.widget.fragments.CalendarFragment.InfinitePageChangeListener" package="kpk.dev.CalendarGrid.widget.fragments">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/adapters/MonthPagerAdapter.java" line="42" class="kpk.dev.CalendarGrid.widget.adapters.MonthPagerAdapter" package="kpk.dev.CalendarGrid.widget.adapters">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/util/CalendarUtils.java" line="40" class="kpk.dev.CalendarGrid.widget.util.CalendarUtils" package="kpk.dev.CalendarGrid.widget.util">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/util/CalendarUtils.java" line="79" class="kpk.dev.CalendarGrid.widget.util.CalendarUtils" package="kpk.dev.CalendarGrid.widget.util">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </line_breakpoints>
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -116,7 +194,6 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
@@ -127,87 +204,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MyActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/MyActivity.java">
+      <file leaf-file-name="MonthPagerAdapter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/adapters/MonthPagerAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="0" selection-start="220" selection-end="220" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Constants.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/util/Constants.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="46" selection-start="754" selection-end="754" vertical-scroll-proportion="0.0">
+            <state line="42" column="42" selection-start="1235" selection-end="1235" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Date.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/models/Date.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="13" selection-start="224" selection-end="224" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MonthGridFragment.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/fragments/MonthGridFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="92" column="74" selection-start="3142" selection-end="3142" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CalendarFragment.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="CalendarFragment.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/fragments/CalendarFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="123" selection-start="1246" selection-end="1246" vertical-scroll-proportion="0.51877934">
+            <state line="35" column="0" selection-start="1277" selection-end="1277" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#4509#4525#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InfiniteViewPager.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/views/InfiniteViewPager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="52" column="89" selection-start="1390" selection-end="1390" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InfinitePagerAdapter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/adapters/InfinitePagerAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="46" selection-start="1245" selection-end="1245" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/layout/main.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="82" selection-start="394" selection-end="394" vertical-scroll-proportion="-2.38">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -218,19 +231,38 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="8" selection-start="295" selection-end="295" vertical-scroll-proportion="-2.04">
+            <state line="5" column="44" selection-start="274" selection-end="274" vertical-scroll-proportion="-1.7">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="month_grid_fragment_layout.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/layout/month_grid_fragment_layout.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
+      <file leaf-file-name="InfiniteViewPager.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/views/InfiniteViewPager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="40" selection-start="375" selection-end="375" vertical-scroll-proportion="-2.38">
+            <state line="82" column="0" selection-start="2447" selection-end="2447" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CalendarUtils.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/util/CalendarUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="79" column="36" selection-start="2514" selection-end="2514" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1111#1121#0" expanded="true" />
+                <element signature="e#4640#4648#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="38" selection-start="258" selection-end="258" vertical-scroll-proportion="0.21573605">
               <folding />
             </state>
           </provider>
@@ -246,30 +278,30 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/res/drawable/calendar_item_backgorund_not_in_month.xml" />
-        <option value="$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/GridAdapter.java" />
-        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/util/CalendarHelper.java" />
         <option value="$PROJECT_DIR$/res/layout/month_grid_fragment_layoout.xml" />
         <option value="$PROJECT_DIR$/res/drawable/disabled_date_drawable.xml" />
         <option value="$PROJECT_DIR$/res/layout/main.xml" />
-        <option value="$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/fragments/MonthGridFragment.java" />
-        <option value="$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/adapters/MonthGridAdapter.java" />
-        <option value="$PROJECT_DIR$/src/kpk/dev/CalendarGrid/MyActivity.java" />
         <option value="$PROJECT_DIR$/res/layout/month_grid_fragment_layout.xml" />
+        <option value="$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/views/InfiniteViewPager.java" />
+        <option value="$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/fragments/MonthGridFragment.java" />
         <option value="$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/util/Constants.java" />
         <option value="$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/adapters/InfinitePagerAdapter.java" />
-        <option value="$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/views/InfiniteViewPager.java" />
+        <option value="$PROJECT_DIR$/src/kpk/dev/CalendarGrid/MyActivity.java" />
+        <option value="$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/adapters/MonthGridAdapter.java" />
+        <option value="$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/adapters/MonthPagerAdapter.java" />
         <option value="$PROJECT_DIR$/res/layout/calendar_layout.xml" />
         <option value="$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/fragments/CalendarFragment.java" />
+        <option value="$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/util/CalendarUtils.java" />
+        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
+    <option name="x" value="54" />
     <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="width" value="1320" />
+    <option name="height" value="784" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -297,7 +329,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -418,6 +449,58 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CalendarGrid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="widget" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fragments" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CalendarGrid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CalendarGrid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CalendarGrid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="widget" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="adapters" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CalendarGrid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CalendarGrid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="res" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -443,25 +526,27 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="OverrideImplement.combined" value="true" />
-    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="options.splitter.main.proportions" value="0.3" />
     <property name="MemberChooser.sorted" value="false" />
+    <property name="options.lastSelected" value="Errors" />
     <property name="recentsLimit" value="5" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/libs/joda-time-2.3.jar!/" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/libs/joda-time-2.3-javadoc.jar!/" />
     <property name="AndroidLayoutSelectedEditor" value="text-editor" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="S56605bc70468" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="froyotest" />
-    <property name="restartRequiresConfirmation" value="true" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -504,19 +589,6 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -542,6 +614,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -664,29 +749,29 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="54" y="-8" width="1320" height="784" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.67074525" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.67074525" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32882166" sideWeight="0.6709265" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32882166" sideWeight="0.6709265" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23557693" sideWeight="0.67074525" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39933258" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39776358" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6451613" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.64377" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2497332" sideWeight="0.67074525" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24960254" sideWeight="0.6709265" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3290735" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -723,10 +808,10 @@
     <option name="SHORT_DIFF_EXTRA_LINES" value="2" />
     <option name="SOFT_WRAPS_IN_SHORT_DIFF" value="true" />
     <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
-    <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
+    <option name="INCLUDE_TEXT_INTO_SHELF" value="true" />
     <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
-    <option name="SHOW_DIRTY_RECURSIVELY" value="false" />
+    <option name="SHOW_DIRTY_RECURSIVELY" value="true" />
     <option name="LIMIT_HISTORY" value="true" />
     <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
     <option name="UPDATE_FILTER_SCOPE_NAME" />
@@ -758,65 +843,10 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/res/layout/calendar_item.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="76" selection-start="253" selection-end="253" vertical-scroll-proportion="-1.36">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/libs/joda-time-2.3-sources.jar!/org/joda/time/DateTimeConstants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="28" selection-start="3288" selection-end="3288" vertical-scroll-proportion="0.33333334">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/drawable/disabled_date_drawable.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="34" selection-start="327" selection-end="327" vertical-scroll-proportion="0.18042453">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/adapters/MonthGridAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="163" column="5" selection-start="5849" selection-end="5849" vertical-scroll-proportion="-7.48">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1249#1268#0" expanded="true" />
-            <element signature="e#1340#1359#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/util/CalendarUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="0" selection-start="1284" selection-end="1284" vertical-scroll-proportion="52.2">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1111#1121#0" expanded="true" />
-            <element signature="e#4638#4646#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/views/SquareTextView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="13" selection-start="316" selection-end="316" vertical-scroll-proportion="0.14731368">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/MyActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="0" selection-start="220" selection-end="220" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -827,47 +857,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/fragments/MonthGridFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="92" column="74" selection-start="3142" selection-end="3142" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+    <entry file="file://$PROJECT_DIR$/res/layout/month_grid_fragment_layout.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state line="7" column="40" selection-start="375" selection-end="375" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/month_grid_fragment_layout.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/fragments/MonthGridFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="40" selection-start="375" selection-end="375" vertical-scroll-proportion="-2.38">
+        <state line="87" column="0" selection-start="2813" selection-end="2813" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/util/Constants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="46" selection-start="754" selection-end="754" vertical-scroll-proportion="0.0">
+        <state line="18" column="25" selection-start="686" selection-end="686" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/adapters/InfinitePagerAdapter.java">
+    <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/MyActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="46" selection-start="1245" selection-end="1245" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/views/InfiniteViewPager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="89" selection-start="1390" selection-end="1390" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="14" column="53" selection-start="620" selection-end="620" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
@@ -881,22 +898,82 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$USER_HOME$/AppData/Local/Android/android-sdk/extras/android/support/v4/android-support-v4.jar!/android/support/v4/view/ViewPager.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="110" column="9" selection-start="5015" selection-end="5119" vertical-scroll-proportion="0.33114755">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/adapters/InfinitePagerAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="46" selection-end="46" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/adapters/MonthGridAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="161" column="97" selection-start="5915" selection-end="5915" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1249#1268#0" expanded="true" />
+            <element signature="e#1340#1359#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/adapters/MonthPagerAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="42" selection-start="1235" selection-end="1235" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/calendar_layout.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="8" selection-start="295" selection-end="295" vertical-scroll-proportion="-2.04">
+        <state line="5" column="44" selection-start="274" selection-end="274" vertical-scroll-proportion="-1.7">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/views/InfiniteViewPager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="82" column="0" selection-start="2447" selection-end="2447" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/fragments/CalendarFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="123" selection-start="1246" selection-end="1246" vertical-scroll-proportion="0.51877934">
+        <state line="35" column="0" selection-start="1277" selection-end="1277" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#4509#4525#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/kpk/dev/CalendarGrid/widget/util/CalendarUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="79" column="36" selection-start="2514" selection-end="2514" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1111#1121#0" expanded="true" />
+            <element signature="e#4640#4648#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="38" selection-start="258" selection-end="258" vertical-scroll-proportion="0.21573605">
+          <folding />
         </state>
       </provider>
     </entry>
@@ -976,7 +1053,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>joda-time-2.3-javadoc</last-edited>
+          <last-edited>joda-time-2.3-javadoc1</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

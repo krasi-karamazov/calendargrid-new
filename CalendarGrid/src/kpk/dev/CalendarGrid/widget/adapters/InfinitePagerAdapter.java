@@ -1,51 +1,83 @@
 package kpk.dev.CalendarGrid.widget.adapters;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import kpk.dev.CalendarGrid.widget.fragments.MonthGridFragment;
-import kpk.dev.CalendarGrid.widget.util.Constants;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created with IntelliJ IDEA.
- * User: krasimir.karamazov
- * Date: 8/28/13
- * Time: 7:28 PM
+ * User: Krasimir
+ * Date: 8/29/13
+ * Time: 1:15 AM
  * To change this template use File | Settings | File Templates.
  */
-public class InfinitePagerAdapter extends FragmentPagerAdapter {
+import android.os.Parcelable;
+import android.support.v4.view.PagerAdapter;
+import android.view.View;
+import android.view.ViewGroup;
 
-    private List<MonthGridFragment> mFragments;
+/**
+ * A PagerAdapter that wraps around another PagerAdapter to handle paging
+ * wrap-around.
+ *
+ */
+public class InfinitePagerAdapter extends PagerAdapter {
+    private PagerAdapter adapter;
 
-    public InfinitePagerAdapter(FragmentManager fm) {
-        super(fm);
-    }
-    
-    public List<MonthGridFragment> getFragments() {
-        if(mFragments == null) {
-            mFragments = new ArrayList<MonthGridFragment>();
-            for(int i = 0; i < Constants.MAX_NUM_PAGES; i++) {
-                mFragments.add(new MonthGridFragment());
-            }
-        }
-        return mFragments;
-    }
-
-    public void setFragments(List<MonthGridFragment> fragments) {
-        mFragments = fragments;
-    }
-
-    @Override
-    public Fragment getItem(int i) {
-        Fragment fragment = mFragments.get(i);
-        return fragment;  //To change body of implemented methods use File | Settings | File Templates.
+    public InfinitePagerAdapter(PagerAdapter adapter) {
+        this.adapter = adapter;
     }
 
     @Override
     public int getCount() {
-        return Constants.MAX_NUM_PAGES;
+        // warning: scrolling to very high values (1,000,000+) results in
+        // strange drawing behaviour
+        return Integer.MAX_VALUE;
+    }
+
+    /**
+     * @return the {@link #getCount()} result of the wrapped adapter
+     */
+    public int getRealCount() {
+        return adapter.getCount();
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        int virtualPosition = position % getRealCount();
+        // only expose virtual position to the inner adapter
+        return adapter.instantiateItem(container, virtualPosition);
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        int virtualPosition = (position) % getRealCount();
+        // only expose virtual position to the inner adapter
+        adapter.destroyItem(container, virtualPosition, object);
+    }
+
+	/*
+	 * Delegate rest of methods directly to the inner adapter.
+	 */
+
+    @Override
+    public void finishUpdate(ViewGroup container) {
+        adapter.finishUpdate(container);
+    }
+
+    @Override
+    public boolean isViewFromObject(View view, Object object) {
+        return adapter.isViewFromObject(view, object);
+    }
+
+    @Override
+    public void restoreState(Parcelable bundle, ClassLoader classLoader) {
+        adapter.restoreState(bundle, classLoader);
+    }
+
+    @Override
+    public Parcelable saveState() {
+        return adapter.saveState();
+    }
+
+    @Override
+    public void startUpdate(ViewGroup container) {
+        adapter.startUpdate(container);
     }
 }

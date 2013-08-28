@@ -16,6 +16,6 @@ public class Constants {
     public static final String START_DAY_OF_WEEK = "start_day_of_week";
     //internal data keys. see MonthGridAdapter for usage
 
-    //max num of pages in InfinitePagerAdapter
+    //max num of pages in
     public static final int MAX_NUM_PAGES = 4;
 }

@@ -15,6 +15,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="android-support-v4" level="project" />
     <orderEntry type="library" name="joda-time-2.3-javadoc" level="project" />
+    <orderEntry type="library" name="joda-time-2.3-sources" level="project" />
+    <orderEntry type="library" name="joda-time-2.3-javadoc1" level="project" />
   </component>
 </module>
 
