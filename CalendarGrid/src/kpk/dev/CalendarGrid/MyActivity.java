@@ -11,8 +11,5 @@ public class MyActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.container, new CalendarFragment(), null);
-        ft.commit();
     }
 }

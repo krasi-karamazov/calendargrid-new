@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import kpk.dev.CalendarGrid.R;
+import kpk.dev.CalendarGrid.util.LogHelper;
 import kpk.dev.CalendarGrid.widget.adapters.MonthGridAdapter;
 import kpk.dev.CalendarGrid.widget.util.Constants;
 import org.joda.time.DateTime;
@@ -62,14 +63,15 @@ public class MonthGridFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mGridView = (GridView)inflater.inflate(R.layout.month_grid_fragment_layout, container, false);
+        View rootView = inflater.inflate(R.layout.month_grid_fragment_layout, container, false);
+        mGridView = (GridView)rootView.findViewById(R.id.calendar_grid);
         DateTime monthToDisplay = DateTime.now();
         mInternalData = new HashMap<String, Object>();
         if(mAdapter != null) {
             mGridView.setAdapter(mAdapter);
         }else{
-            mAdapter = new MonthGridAdapter(getActivity(), monthToDisplay.getMonthOfYear(), monthToDisplay.getYear(), getInternalData(), null);
-            mGridView.setAdapter(mAdapter);
+            //mAdapter = new MonthGridAdapter(getActivity(), monthToDisplay.getMonthOfYear(), monthToDisplay.getYear(), getInternalData(), null);
+            //mGridView.setAdapter(mAdapter);
         }
 
         if(mOnItemClickListener != null){
@@ -79,8 +81,10 @@ public class MonthGridFragment extends Fragment {
         if(mOnItemLongClickListener != null){
             mGridView.setOnItemLongClickListener(mOnItemLongClickListener);
         }
+        mGridView.setMinimumHeight(container.getMeasuredHeight() / 6);
+        //LogHelper.d("HEIGHT " + container.getMeasuredHeight());
 
-        return mGridView;
+        return rootView;
     }
 
     private Map<String, Object> getInternalData() {

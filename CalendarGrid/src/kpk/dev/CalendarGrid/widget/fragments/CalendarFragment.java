@@ -1,13 +1,21 @@
 package kpk.dev.CalendarGrid.widget.fragments;
 
+
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import kpk.dev.CalendarGrid.R;
+
+import kpk.dev.CalendarGrid.util.LogHelper;
+import kpk.dev.CalendarGrid.util.StyleHelper;
 import kpk.dev.CalendarGrid.widget.adapters.InfinitePagerAdapter;
 import kpk.dev.CalendarGrid.widget.adapters.MonthPagerAdapter;
 import kpk.dev.CalendarGrid.widget.adapters.MonthGridAdapter;
@@ -31,16 +39,24 @@ public class CalendarFragment extends Fragment {
     private InfiniteViewPager mPager;
     private InfinitePageChangeListener mPageChangeListener;
     private List<DateTime> mDates;
+    private DateTime mCurrentDate;
+    private TextView mTitleView;
+    private int mCurrentMonth;
+    private int mCurrentYear;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.calendar_layout, container, false);
-        DateTime currentDate = new DateTime(new Date());
-        mDates = CalendarUtils.getFullWeeks(currentDate.getMonthOfYear(), currentDate.getYear(), DateTimeConstants.SUNDAY);
+        mCurrentDate = new DateTime(new Date());
+        mDates = CalendarUtils.getFullWeeks(mCurrentDate.getMonthOfYear(), mCurrentDate.getYear(), DateTimeConstants.SUNDAY);
         mPager = (InfiniteViewPager)rootView.findViewById(R.id.pager);
         mPager.setDatesList(mDates);
+
+        mTitleView = (TextView)rootView.findViewById(R.id.month_year_label);
+        mTitleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, StyleHelper.getInstance().getTitleTextTextSize());
+        mTitleView.setTextColor(StyleHelper.getInstance().getTitleTextTextColor());
         mPageChangeListener = new InfinitePageChangeListener();
-        mPageChangeListener.setDateTime(currentDate);
-        initGridAdapters(currentDate);
+        mPageChangeListener.setDateTime(mCurrentDate);
+        initGridAdapters(mCurrentDate);
         final MonthPagerAdapter monthPagerAdapter = new MonthPagerAdapter(getActivity().getSupportFragmentManager());
         List<MonthGridFragment> fragments = monthPagerAdapter.getFragments();
         for(int i = 0; i < Constants.MAX_NUM_PAGES; i++){
@@ -52,7 +68,26 @@ public class CalendarFragment extends Fragment {
         InfinitePagerAdapter infinitePagerAdapter = new InfinitePagerAdapter(monthPagerAdapter);
         mPager.setOnPageChangeListener(mPageChangeListener);
         mPager.setAdapter(infinitePagerAdapter);
+        mPager.setPageMargin(0);
+
+
         return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mPager.post(new Runnable() {
+            @Override
+            public void run() {
+
+                for(MonthGridAdapter adapter : mAdapters) {
+                    Rect r = new Rect();
+                    r.set(0, 0, mPager.getWidth(), mPager.getHeight());
+                    adapter.setDimensions(r);
+                }
+            }
+        });
     }
 
     private AdapterView.OnItemClickListener getOnItemClickListener() {
@@ -120,10 +155,8 @@ public class CalendarFragment extends Fragment {
     }
 
     public void refreshView() {
-        // Refresh title view
-        /*monthTitleTextView.setText(new DateTime(year, month, 1, 0, 0, 0, 0)
-                .monthOfYear().getAsText().toUpperCase()
-                + " " + year);*/
+
+
 
         // Refresh the date grid views
         for (MonthGridAdapter adapter : mAdapters) {
@@ -228,6 +261,9 @@ public class CalendarFragment extends Fragment {
 
             // Update current page
             mCurrentPage = position;
+            mCurrentMonth = mDateTime.getMonthOfYear();
+            mCurrentYear = mDateTime.getYear();
+            mTitleView.setText(new DateTime(mCurrentYear, mCurrentMonth, 1, 0, 0, 0, 0).monthOfYear().getAsText().toUpperCase() + " " + mCurrentYear);
         }
 
     }

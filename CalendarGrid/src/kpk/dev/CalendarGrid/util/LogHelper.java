@@ -13,8 +13,8 @@ import android.util.Log;
  */
 public class LogHelper {
 
-    public static String LOG_TAG;
-    public static boolean DEBUG;
+    public static String LOG_TAG = "LOG_TAG";
+    public static boolean DEBUG = true;
 
     public static void d(String msg){
         if(DEBUG){

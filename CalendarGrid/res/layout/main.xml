@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+    xmlns:mmcalendar="http://schemas.android.com/apk/res-auto"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
-    <FrameLayout
+    <kpk.dev.CalendarGrid.widget.RootView
         android:id="@+id/container"
-        android:layout_width="match_parent" android:layout_height="match_parent"/>
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        mmcalendar:dates_from_current_month_text_color="#235671"
+        mmcalendar:dates_from_next_month_text_color="#678912"
+        mmcalendar:dates_from_previous_month_text_color="#678912"
+        mmcalendar:dates_from_current_month_text_size="14sp"
+        mmcalendar:dates_from_next_month_text_size="15sp"
+        mmcalendar:dates_from_previous_month_text_size="15sp"
+        mmcalendar:month_year_text_size="20sp"
+        mmcalendar:month_year_text_color="#00ff00"
+        mmcalendar:current_date_text_color="#0000ff"
+        mmcalendar:current_date_text_size="20sp"
+        mmcalendar:title_text_gravity="center"
+        mmcalendar:should_show_calendar_events="true"
+        mmcalendar:calendar_name="krasi.karamazov@gmail.com"
+        mmcalendar:current_date_background_drawable="@drawable/calendar_item_background_normal"
+        mmcalendar:previous_month_dates_background_drawable="@drawable/calendar_item_backgorund_not_in_month"
+        mmcalendar:next_month_dates_background_drawable="@drawable/calendar_item_backgorund_not_in_month"
+        mmcalendar:dates_from_current_month_background_drawable="@drawable/cell_bg"/>
 </RelativeLayout>
 

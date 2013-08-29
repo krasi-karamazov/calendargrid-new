@@ -54,7 +54,7 @@ public class InfiniteViewPager extends ViewPager {
      * @param widthMeasureSpec
      * @param heightMeasureSpec
      */
-    @Override
+   /* @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
@@ -65,12 +65,12 @@ public class InfiniteViewPager extends ViewPager {
 
         int height = getMeasuredHeight();
         if (wrapHeight && mRowHeight == 0) {
-			/*
+			*//*
 			 * The first super.onMeasure call made the pager take up all the
 			 * available height. Since we really wanted to wrap it, we need to
 			 * remeasure it. Luckily, after that call the first child is now
 			 * available. So, we take the height from it.
-			 */
+			 *//*
 
             int width = getMeasuredWidth();
 
@@ -78,17 +78,17 @@ public class InfiniteViewPager extends ViewPager {
             widthMeasureSpec = MeasureSpec.makeMeasureSpec(width,
                     MeasureSpec.EXACTLY);
 
-			/*
+			*//*
 			 * If the pager actually has any children, take the first child's
 			 * height and call that our own
-			 */
+			 *//*
             if (getChildCount() > 0) {
                 View firstChild = getChildAt(0);
 
-				/*
+				*//*
 				 * The child was previously measured with exactly the full
 				 * height. Allow it to wrap this time around.
-				 */
+				 *//*
                 firstChild.measure(widthMeasureSpec, MeasureSpec
                         .makeMeasureSpec(height, MeasureSpec.AT_MOST));
 
@@ -112,5 +112,5 @@ public class InfiniteViewPager extends ViewPager {
                 MeasureSpec.EXACTLY);
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
+    }*/
 }
