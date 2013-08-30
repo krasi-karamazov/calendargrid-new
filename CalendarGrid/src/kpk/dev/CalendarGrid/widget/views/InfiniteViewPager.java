@@ -5,6 +5,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
+import kpk.dev.CalendarGrid.widget.models.CalendarModel;
 import org.joda.time.DateTime;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class InfiniteViewPager extends ViewPager {
     public static final int OFFSET = 1000;
 
     //we need this so we can set wrap_content and the size be calculated if we need it
-    private List<DateTime> mDatesList;
+    private List<CalendarModel> mDatesList;
 
     //the row height. See onMeasure.
     private int mRowHeight = 0;
@@ -34,7 +35,7 @@ public class InfiniteViewPager extends ViewPager {
         super(context, attrs);
     }
 
-    public void setDatesList(List<DateTime> dates) {
+    public void setDatesList(List<CalendarModel> dates) {
         mDatesList = dates;
     }
 

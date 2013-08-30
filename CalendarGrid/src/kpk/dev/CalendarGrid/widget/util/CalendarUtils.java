@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import kpk.dev.CalendarGrid.widget.models.CalendarModel;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -36,9 +37,9 @@ public class CalendarUtils {
      *            : calendar can start from customized date instead of Sunday
      * @return
      */
-    public static ArrayList<DateTime> getFullWeeks(int month, int year,
+    public static ArrayList<CalendarModel> getFullWeeks(int month, int year,
                                                    int startDayOfWeek) {
-        ArrayList<DateTime> datetimeList = new ArrayList<DateTime>();
+        ArrayList<CalendarModel> datetimeList = new ArrayList<CalendarModel>();
 
         DateTime firstDateOfMonth = new DateTime(year, month, 1, 0, 0, 0, 0);
         DateTime lastDateOfMonth = firstDateOfMonth.plusMonths(1).minusDays(1);
@@ -59,14 +60,17 @@ public class CalendarUtils {
             if (!dateTime.isBefore(firstDateOfMonth)) {
                 break;
             }
-
-            datetimeList.add(dateTime);
+            CalendarModel model = new CalendarModel();
+            model.setDateTime(dateTime);
+            datetimeList.add(model);
             weekdayOfFirstDate--;
         }
 
         // Add dates of current month
         for (int i = 0; i < lastDateOfMonth.getDayOfMonth(); i++) {
-            datetimeList.add(firstDateOfMonth.plusDays(i));
+            CalendarModel model = new CalendarModel();
+            model.setDateTime(firstDateOfMonth.plusDays(i));
+            datetimeList.add(model);
         }
 
         // Add dates of last week from next month
@@ -80,8 +84,10 @@ public class CalendarUtils {
         if (datetimeList.size() < 42) {
             int i = 1;
             while (datetimeList.size() < 42) {
-                DateTime nextDay = lastDateOfMonth.plusDays(i);
-                datetimeList.add(nextDay);
+                CalendarModel model = new CalendarModel();
+                model.setDateTime(lastDateOfMonth.plusDays(i));
+
+                datetimeList.add(model);
                 i++;
                 /*if (nextDay.getDayOfWeek() == endDayOfWeek) {
                     break;

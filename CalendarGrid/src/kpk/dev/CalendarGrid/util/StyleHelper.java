@@ -14,7 +14,7 @@ public class StyleHelper {
     private static StyleHelper sInstance;
     private int mCurrentMonthTextColor = -1;
 
-    private Drawable mCurrentMonthBackgroundDrawable = null;
+    private int mCurrentMonthBackgroundDrawable = -1;
     private int mNextMonthTextColor = - 1;
     private int mPreviousMonthTextColor = -1;
     private float mCurrentMonthTextSize = -1;
@@ -24,9 +24,9 @@ public class StyleHelper {
     private int mTitleTextTextColor = -1;
     private int mCurrentDateTextColor = -1;
     private float mCurrentDateTextSize = -1;
-    private Drawable mCurrentDateBackgroundDrawable = null;
-    private Drawable mPreviousMonthBackgroundDrawable = null;
-    private Drawable mNextMonthBackgroundDrawable = null;
+    private int mCurrentDateBackgroundDrawable = -1;
+    private int mPreviousMonthBackgroundDrawable = -1;
+    private int mNextMonthBackgroundDrawable = -1;
     private int mTitleTextGravity = -1;
     private boolean mShouldShowEvents;
     private String mCalendarName;
@@ -57,11 +57,11 @@ public class StyleHelper {
         this.mCalendarName = mCalendarName;
     }
 
-    public Drawable getCurrentMonthBackgroundDrawable() {
+    public int getCurrentMonthBackgroundDrawable() {
         return mCurrentMonthBackgroundDrawable;
     }
 
-    public void setCurrentMonthBackgroundDrawable(Drawable mCurrentMonthBackgroundDrawable) {
+    public void setCurrentMonthBackgroundDrawable(int mCurrentMonthBackgroundDrawable) {
         this.mCurrentMonthBackgroundDrawable = mCurrentMonthBackgroundDrawable;
     }
 
@@ -145,27 +145,27 @@ public class StyleHelper {
         this.mCurrentDateTextSize = mCurrentDateTextSize;
     }
 
-    public Drawable getCurrentDateBackgroundDrawable() {
+    public int getCurrentDateBackgroundDrawable() {
         return mCurrentDateBackgroundDrawable;
     }
 
-    public void setCurrentDateBackgroundDrawable(Drawable mCurrentDateBackgroundDrawable) {
+    public void setCurrentDateBackgroundDrawable(int mCurrentDateBackgroundDrawable) {
         this.mCurrentDateBackgroundDrawable = mCurrentDateBackgroundDrawable;
     }
 
-    public Drawable getPreviousMonthBackgroundDrawable() {
+    public int getPreviousMonthBackgroundDrawable() {
         return mPreviousMonthBackgroundDrawable;
     }
 
-    public void setPreviousMonthBackgroundDrawable(Drawable mPreviousMonthBackgroundDrawable) {
+    public void setPreviousMonthBackgroundDrawable(int mPreviousMonthBackgroundDrawable) {
         this.mPreviousMonthBackgroundDrawable = mPreviousMonthBackgroundDrawable;
     }
 
-    public Drawable getNextMonthBackgroundDrawable() {
+    public int getNextMonthBackgroundDrawable() {
         return mNextMonthBackgroundDrawable;
     }
 
-    public void setNextMonthBackgroundDrawable(Drawable mNextMonthBackgroundDrawable) {
+    public void setNextMonthBackgroundDrawable(int mNextMonthBackgroundDrawable) {
         this.mNextMonthBackgroundDrawable = mNextMonthBackgroundDrawable;
     }
 
