@@ -4,17 +4,23 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.AttributeSet;
-import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import kpk.dev.CalendarGrid.R;
 import kpk.dev.CalendarGrid.listener.OnDateClickListener;
 import kpk.dev.CalendarGrid.listener.OnDateLongClickListener;
 import kpk.dev.CalendarGrid.util.StyleHelper;
 import kpk.dev.CalendarGrid.widget.fragments.CalendarFragment;
+import kpk.dev.CalendarGrid.widget.fragments.DayViewFragment;
 import kpk.dev.CalendarGrid.widget.models.CalendarModel;
+import kpk.dev.CalendarGrid.widget.util.CalendarState;
+import org.joda.time.DateTime;
+
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,6 +33,7 @@ public class RootView extends FrameLayout {
     private OnDateClickListener mClickListener;
     private OnDateLongClickListener mLongClickListener;
     public static final int ID = 666;
+    private static final String FRAGMENT_TAG = "calendar_fragment";
     public RootView(Context context) {
         super(context);
         init();
@@ -74,34 +81,79 @@ public class RootView extends FrameLayout {
     private void init() {
         this.setId(ID);
         if(!(getContext() instanceof Activity)  && !(getContext() instanceof FragmentActivity)) {
-            throw new IllegalStateException("the parent must be a fragmentActivity");
+            throw new IllegalStateException("The context must be from a fragment activity");
         }
-        FragmentTransaction ft = ((FragmentActivity) getContext()).getSupportFragmentManager().beginTransaction();
-        ft.add(this.getId(), new CalendarFragment(), "null");
-        ft.commit();
     }
 
     public void setOnDateClickListener(OnDateClickListener listener) {
         mClickListener = listener;
-        CalendarFragment fragment = (CalendarFragment)((FragmentActivity) getContext()).getSupportFragmentManager().findFragmentByTag("null");
-        if(fragment != null) {
-            fragment.setOnDateClickListener(mClickListener);
-        }
-
     }
 
     public void setOnDateLongClickListener(OnDateLongClickListener listener) {
         mLongClickListener = listener;
-        CalendarFragment fragment = (CalendarFragment)((FragmentActivity) getContext()).getSupportFragmentManager().findFragmentByTag("null");
-        if(fragment != null) {
-            fragment.setOnDateLongClickListener(mLongClickListener);
-        }
     }
 
     public void showEvents(CalendarModel model) {
-        CalendarFragment fragment = (CalendarFragment)((FragmentActivity) getContext()).getSupportFragmentManager().findFragmentByTag("null");
+        CalendarFragment fragment = (CalendarFragment)((FragmentActivity) getContext()).getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
         if(fragment != null) {
-            fragment.showEvents(model);
+            fragment.showDayView(model);
+        }
+    }
+
+    public void showDayView(CalendarModel model) {
+        Bundle args = new Bundle();
+        args.putSerializable(DayViewFragment.CALENDAR_MODEL_ARGS_KEY, model);
+        DayViewFragment dayViewFragment = DayViewFragment.getInstance(args);
+        FragmentTransaction ft = ((FragmentActivity) getContext()).getSupportFragmentManager().beginTransaction();
+        ft.add(this.getId(), dayViewFragment, " ");
+        ft.addToBackStack("bla");
+        ft.commit();
+        /*CalendarFragment fragment = (CalendarFragment)((FragmentActivity) getContext()).getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+        if(fragment != null) {
+            fragment.showDayView(model);
+        }*/
+    }
+
+    public void initCalendar(Bundle savedInstanceState) {
+        CalendarFragment fragment = new CalendarFragment();
+        fragment.setOnDateLongClickListener(mLongClickListener);
+        fragment.setOnDateClickListener(mClickListener);
+        FragmentTransaction ft = ((FragmentActivity) getContext()).getSupportFragmentManager().beginTransaction();
+        DateTime time = new DateTime(new Date());
+        if(savedInstanceState != null){
+            fragment.restoreStatesFromKey(savedInstanceState);
+        }
+        ft.replace(this.getId(), fragment, FRAGMENT_TAG);
+        ft.commit();
+
+    }
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        CalendarState state = null;
+        CalendarFragment fragment = (CalendarFragment)((FragmentActivity)getContext()).getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+        if(fragment != null) {
+            state = new CalendarState(super.onSaveInstanceState());
+            state.setMonth(fragment.getCurrentMonth());
+            state.setYear(fragment.getCurrentYear());
+        }
+        return state;    //To change body of overridden methods use File | Settings | File Templates.
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        if(state != null) {
+            if(!(state instanceof CalendarState)) {
+                super.onRestoreInstanceState(state);
+                return;
+            }
+            CalendarState ss = (CalendarState)state;
+            super.onRestoreInstanceState(ss.getSuperState());
+
+            Bundle bundle = new Bundle();
+            bundle.putInt(CalendarFragment.MONTH, ss.getMonth());
+            bundle.putInt(CalendarFragment.YEAR, ss.getYear());
+            initCalendar(bundle);
         }
     }
 }

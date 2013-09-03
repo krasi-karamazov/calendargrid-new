@@ -18,6 +18,42 @@ public class Instance implements Serializable {
     private int mBeginDay;
     private int mEndDay;
     private long mEventId;
+    private long mCalendarId;
+    private int mCalendarColor;
+    private String mTitle;
+    private String mDescription;
+
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public void setTitle(String title) {
+        this.mTitle = title;
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public void setDescription(String description) {
+        this.mDescription = description;
+    }
+
+    public long getCalendarId() {
+        return mCalendarId;
+    }
+
+    public void setCalendarId(long calendarId) {
+        this.mCalendarId = mCalendarId;
+    }
+
+    public int getCalendarColor() {
+        return mCalendarColor;
+    }
+
+    public void setCalendarColor(int calendarColor) {
+        this.mCalendarColor = calendarColor;
+    }
 
     public DateTime getBeginTime() {
         return mBeginTime;

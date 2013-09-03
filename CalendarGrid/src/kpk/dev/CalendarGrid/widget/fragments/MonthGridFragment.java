@@ -1,5 +1,6 @@
 package kpk.dev.CalendarGrid.widget.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -35,6 +36,12 @@ public class MonthGridFragment extends Fragment {
     private AdapterView.OnItemLongClickListener mOnItemLongClickListener;
     private Map<String, Object> mInternalData;
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);    //To change body of overridden methods use File | Settings | File Templates.
+
+    }
+
     public AdapterView.OnItemClickListener getOnItemClickListener() {
         return mOnItemClickListener;
     }
@@ -66,14 +73,14 @@ public class MonthGridFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.month_grid_fragment_layout, container, false);
-        mGridView = (GridView)rootView.findViewById(R.id.calendar_grid);
+        mGridView = (GridView)rootView.findViewById(R.id.calendar_gridview);
         DateTime monthToDisplay = DateTime.now();
         mInternalData = new HashMap<String, Object>();
         if(mAdapter != null) {
             mGridView.setAdapter(mAdapter);
         }else{
-            //mAdapter = new MonthGridAdapter(getActivity(), monthToDisplay.getMonthOfYear(), monthToDisplay.getYear(), getInternalData(), null);
-            //mGridView.setAdapter(mAdapter);
+            mAdapter = new MonthGridAdapter(getActivity(), monthToDisplay.getMonthOfYear(), monthToDisplay.getYear());
+            mGridView.setAdapter(mAdapter);
         }
 
         if(mOnItemClickListener != null){
@@ -83,9 +90,6 @@ public class MonthGridFragment extends Fragment {
         if(mOnItemLongClickListener != null){
             mGridView.setOnItemLongClickListener(mOnItemLongClickListener);
         }
-        mGridView.setMinimumHeight(container.getMeasuredHeight() / 6);
-        //LogHelper.d("HEIGHT " + container.getMeasuredHeight());
-
         return rootView;
     }
 

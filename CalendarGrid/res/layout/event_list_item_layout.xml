@@ -6,13 +6,13 @@
               android:layout_height="match_parent"
         android:background="@color/caldroid_white"
         android:padding="10dp">
-<View
+<TextView
     android:id="@+id/calendar_color"
-    android:layout_width="30dp" android:layout_height="match_parent"
-    android:background="@color/caldroid_holo_blue_light"/>
+    android:layout_width="10dp" android:layout_height="match_parent"
+    android:background="@android:color/black"/>
 <TextView
     android:id="@+id/title"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="wrap_content" android:layout_height="match_parent"
     android:layout_toRightOf="@+id/calendar_color" android:layout_marginLeft="5dp"
     android:textColor="@android:color/black" android:text="test" android:textSize="14dp"/>
 </RelativeLayout>

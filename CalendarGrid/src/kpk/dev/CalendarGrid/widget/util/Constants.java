@@ -14,6 +14,8 @@ public class Constants {
     public static final String MIN_DATE = "min_date";
     public static final String MAX_DATE = "max_date";
     public static final String START_DAY_OF_WEEK = "start_day_of_week";
+    public static final String MONTH = "month";
+    public static final String YEAR = "year";
     //internal data keys. see MonthGridAdapter for usage
 
     //max num of pages in

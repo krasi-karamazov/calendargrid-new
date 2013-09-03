@@ -66,7 +66,7 @@ public class InfinitePagerAdapter extends PagerAdapter {
         return adapter.isViewFromObject(view, object);
     }
 
-    @Override
+    /*@Override
     public void restoreState(Parcelable bundle, ClassLoader classLoader) {
         adapter.restoreState(bundle, classLoader);
     }
@@ -79,5 +79,5 @@ public class InfinitePagerAdapter extends PagerAdapter {
     @Override
     public void startUpdate(ViewGroup container) {
         adapter.startUpdate(container);
-    }
+    }*/
 }

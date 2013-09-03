@@ -49,8 +49,8 @@ public class CalendarMainLoader implements LoaderManager.LoaderCallbacks<Cursor>
             mModels = new ArrayList<CalendarModel>();
         }
         mModels.addAll(models);
-        mStartDate = new DateTime(startDate.getYear(), startDate.getMonthOfYear(), 1, 0, 0);
-        mEndDate = new DateTime(endDate.getYear(), endDate.getMonthOfYear(), 1, 0, 0);;
+        mStartDate = startDate;//new DateTime(startDate.getYear(), startDate.getMonthOfYear(), 1, 0, 0);
+        mEndDate = endDate;//new DateTime(endDate.getYear(), endDate.getMonthOfYear(), 1, 0, 0);;
         LoaderManager manager = ((FragmentActivity)mContext).getSupportLoaderManager();
         Loader loader = manager.getLoader(LOADER_ID);
         if(loader != null) {
@@ -85,7 +85,13 @@ public class CalendarMainLoader implements LoaderManager.LoaderCallbacks<Cursor>
             instance.setEndDay(endDateTime.getDayOfMonth());
             instance.setBeginTime(beginDateTime);
             instance.setEndTime(endDateTime);
+            instance.setEventId(cursor.getLong(cursor.getColumnIndexOrThrow(CalendarContract.Instances.EVENT_ID)));
+            instance.setCalendarId(cursor.getLong(cursor.getColumnIndexOrThrow(CalendarContract.Instances.CALENDAR_ID)));
+            String color = cursor.getString(cursor.getColumnIndexOrThrow(CalendarContract.Instances.CALENDAR_COLOR));
+            instance.setCalendarColor((0xff000000 + Integer.parseInt(color)));
 
+            instance.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(CalendarContract.Instances.TITLE)));
+            instance.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(CalendarContract.Instances.DESCRIPTION)));
             DateTime key = beginDateTime.withMillisOfDay(0);
             mInstancesMap.put(key, instance);
         }

@@ -1,8 +1,10 @@
 package kpk.dev.CalendarGrid.widget.fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -10,8 +12,11 @@ import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import kpk.dev.CalendarGrid.R;
+import kpk.dev.CalendarGrid.util.CalendarEventsLoader;
 import kpk.dev.CalendarGrid.widget.adapters.EventsListAdapter;
 import kpk.dev.CalendarGrid.widget.models.CalendarModel;
+import kpk.dev.CalendarGrid.widget.models.Event;
+import kpk.dev.CalendarGrid.widget.models.Instance;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +31,9 @@ import java.util.List;
  */
 public class EventsListDialogFragment extends DialogFragment {
     public static final String CALENDAR_MODEL_ARGS_KEY = "calendar_model";
-    private CalendarModel mModel;
     private ListView mEventsListView;
+    private EventsListAdapter mAdapter;
+    private List<Instance> mInstances;
     public static EventsListDialogFragment getInstance(Bundle args) {
         EventsListDialogFragment fragment = new EventsListDialogFragment();
         fragment.setArguments(args);
@@ -35,24 +41,23 @@ public class EventsListDialogFragment extends DialogFragment {
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rootView = inflater.inflate(R.layout.events_dialog_layout, null, false);
-        mEventsListView = (ListView)rootView.findViewById(R.id.events_list);
-        mEventsListView.setAdapter(getEventsAdapter(getArguments()));
-        builder.setView(rootView);
-        return builder.show();
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);    //To change body of overridden methods use File | Settings | File Templates.
+        setRetainInstance(true);
     }
 
-    public ListAdapter getEventsAdapter(Bundle bundle) {
-        CalendarModel model = (CalendarModel)bundle.getSerializable(CALENDAR_MODEL_ARGS_KEY);
-        List<Long> mEventIds = new ArrayList<Long>();
-
-        for(int i = 0; i < model.getInstances().size(); i++) {
-            mEventIds.add(model.getInstances().get(i).getEventId());
-        }
-
-        return new EventsListAdapter(getActivity(), android.R.layout.simple_list_item_1, null);
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = new Dialog(getActivity());
+        LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View rootView = inflater.inflate(R.layout.events_dialog_layout, null, false);
+        dialog.setContentView(rootView);
+        mEventsListView = (ListView)rootView.findViewById(R.id.events_list);
+        CalendarModel model = (CalendarModel)getArguments().getSerializable(CALENDAR_MODEL_ARGS_KEY);
+        mInstances = model.getInstances();
+        mAdapter = new EventsListAdapter(getActivity(), mInstances);
+        mEventsListView.setAdapter(mAdapter);
+        dialog.setTitle(model.getDateTime().toString("dd MMMM yyyy"));
+        return dialog;
     }
 }

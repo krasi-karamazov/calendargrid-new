@@ -3,15 +3,10 @@ package kpk.dev.CalendarGrid.widget.adapters;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import kpk.dev.CalendarGrid.R;
@@ -36,7 +31,6 @@ public class MonthGridAdapter extends BaseAdapter {
     protected DateTime mMaxDate;
     protected DateTime mToday;
     protected int mStartDayOfWeek;
-    protected Resources mResources;
 
     protected List<CalendarModel> mDateTimeList;
     protected int mMonth;
@@ -54,46 +48,25 @@ public class MonthGridAdapter extends BaseAdapter {
 
     private View.OnTouchListener mTouchListener;
     private View.OnLongClickListener mLongClickListener;
-    private int mParentWidth;
-    private int mParentHeight;
 
 
-    public MonthGridAdapter(Context context, int month, int year, Map<String, Object> internalData, Map<String, Object> clientData) {
+    public MonthGridAdapter(Context context, int month, int year) {
         mContext = context;
         mMonth = month;
         mYear = year;
-        mInternalData = internalData;
-        mClientData = clientData;
 
         populateGrid();
     }
 
     public void setDimensions(Rect r) {
-        mParentWidth = r.width();
-        mParentHeight = r.height();
+        //mParentWidth = r.width();
+        //mParentHeight = r.height();
         notifyDataSetChanged();
     }
 
     private void populateGrid() {
-        mDisabledDates = (List<DateTime>) mInternalData.get(Constants.DISABLED_DATES);
-        if (mDisabledDates != null) {
-            mDisabledDatesMap.clear();
-            for (DateTime dateTime : mDisabledDates) {
-                mDisabledDatesMap.put(dateTime, 1);
-            }
-        }
-
-        mSelectedDates = (ArrayList<DateTime>) mInternalData.get(Constants.SELECTED_DATES);
-        if (mSelectedDates != null) {
-            mSelectedDatesMap.clear();
-            for (DateTime dateTime : mSelectedDates) {
-                mSelectedDatesMap.put(dateTime, 1);
-            }
-        }
-
-        mMinDate = (DateTime) mInternalData.get(Constants.MIN_DATE);
-        mMaxDate = (DateTime) mInternalData.get(Constants.MAX_DATE);
-        mStartDayOfWeek = (Integer) mInternalData.get(Constants.START_DAY_OF_WEEK);
+        
+        mStartDayOfWeek = ((Calendar.getInstance().getFirstDayOfWeek() + 5) % 7) + 1;
 
         mDateTimeList = CalendarUtils.getFullWeeks(mMonth, mYear, mStartDayOfWeek);
     }
@@ -125,72 +98,44 @@ public class MonthGridAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        TextView calendarCell = (TextView)view;
-        if(calendarCell == null) {
-            calendarCell = (TextView)inflater.inflate(R.layout.calendar_item, viewGroup, false);
-        }
-        calendarCell.setTextColor(Color.BLACK);
+        View calendarCellContainer = view;
+        TextView calendarCell;
+        if(calendarCellContainer == null) {
+            calendarCellContainer = inflater.inflate(R.layout.calendar_item, viewGroup, false);
 
-        calendarCell.setLayoutParams(new AbsListView.LayoutParams((mParentWidth / 7) - 2, (mParentHeight / 6) - 6));
+        }
+        calendarCell = (TextView)calendarCellContainer.findViewById(R.id.calendar_tv);
+        calendarCell.setTextColor(Color.BLACK);
 
         DateTime cellTime = mDateTimeList.get(i).getDateTime();
 
-        boolean shouldResetDisabledView = false;
-        boolean shouldResetSelectedView = false;
-        //Check if date is in range
-        if((mMinDate != null && cellTime.isBefore(mMinDate)) || (mMaxDate != null && cellTime.isAfter(mMaxDate)) || (mDisabledDates != null && mDisabledDates.contains(cellTime))){
-            calendarCell.setTextColor(Color.MAGENTA);
-            calendarCell.setBackgroundResource(R.drawable.disabled_date_drawable);
-            if(cellTime.equals(mToday)) {
-                calendarCell.setTextColor(StyleHelper.getInstance().getCurrentDateTextColor());
-                calendarCell.setTextSize(TypedValue.COMPLEX_UNIT_SP, StyleHelper.getInstance().getCurrentDateTextSize());
-                calendarCell.setBackgroundResource(StyleHelper.getInstance().getCurrentDateBackgroundDrawable());
-            }
+        if (cellTime.equals(getToday())) {
+            calendarCellContainer.setBackgroundResource(R.drawable.today_drawable);
+
+        } else if(cellTime.getMonthOfYear() < this.mMonth) {
+            calendarCellContainer.setBackgroundResource(R.drawable.cell_bg_not_in_current_month);
+            calendarCell.setTextColor(StyleHelper.getInstance().getPreviousMonthTextColor());
+        }else if(cellTime.getMonthOfYear() > this.mMonth){
+            calendarCellContainer.setBackgroundResource(R.drawable.cell_bg_not_in_current_month);
+            calendarCell.setTextColor(StyleHelper.getInstance().getNextMonthTextColor());
         }else{
-            shouldResetDisabledView = true;
+            calendarCellContainer.setBackgroundResource(R.drawable.cell_bg);
+            calendarCell.setTextColor(StyleHelper.getInstance().getCurrentMonthTextColor());
         }
 
-        if(mSelectedDates != null && mSelectedDates.contains(cellTime)) {
-            calendarCell.setBackgroundColor(mResources.getColor(Color.BLUE));
-            calendarCell.setTextColor(mResources.getColor(Color.WHITE));
-        }else{
-           shouldResetSelectedView = true;
-        }
-
-        if (shouldResetDisabledView && shouldResetSelectedView) {
-            if (cellTime.equals(getToday())) {
-                calendarCell.setTextSize(TypedValue.COMPLEX_UNIT_SP, StyleHelper.getInstance().getCurrentDateTextSize());
-                calendarCell.setTextColor(StyleHelper.getInstance().getCurrentDateTextColor());
-                calendarCell.setBackgroundResource(StyleHelper.getInstance().getCurrentDateBackgroundDrawable());
-            } else if(cellTime.getMonthOfYear() < this.mMonth) {
-                calendarCell.setTextSize(TypedValue.COMPLEX_UNIT_SP, StyleHelper.getInstance().getPreviousMonthTextSize());
-                calendarCell.setBackgroundResource(StyleHelper.getInstance().getPreviousMonthBackgroundDrawable());
-                calendarCell.setTextColor(StyleHelper.getInstance().getPreviousMonthTextColor());
-            }else if(cellTime.getMonthOfYear() > this.mMonth){
-                calendarCell.setTextSize(TypedValue.COMPLEX_UNIT_SP, StyleHelper.getInstance().getNextMonthTextSize());
-                calendarCell.setBackgroundResource(StyleHelper.getInstance().getNextMonthBackgroundDrawable());
-                calendarCell.setTextColor(StyleHelper.getInstance().getNextMonthTextColor());
-            }else{
-                calendarCell.setTextSize(TypedValue.COMPLEX_UNIT_SP, StyleHelper.getInstance().getCurrentMonthTextSize());
-                calendarCell.setBackgroundResource(StyleHelper.getInstance().getCurrentMonthBackgroundDrawable());
-                calendarCell.setTextColor(StyleHelper.getInstance().getCurrentMonthTextColor());
-            }
-        }
         if(mDateTimeList.get(i).getInstances() != null && mDateTimeList.get(i).getInstances().size() > 0) {
             calendarCell.setTextColor(Color.MAGENTA);
         }
 
         calendarCell.setText(cellTime.getDayOfMonth() + "");
 
-        return calendarCell;
+        return calendarCellContainer;
     }
 
     public void setAdapterDateTime(DateTime dateTime) {
         if(dateTime != null){
             this.mMonth = dateTime.getMonthOfYear();
             this.mYear = dateTime.getYear();
-            mDateTimeList = CalendarUtils.getFullWeeks(this.mMonth, this.mYear, mStartDayOfWeek);
-        }else{
             mDateTimeList = CalendarUtils.getFullWeeks(this.mMonth, this.mYear, mStartDayOfWeek);
         }
     }
@@ -259,12 +204,8 @@ public class MonthGridAdapter extends BaseAdapter {
         mSelectedDates = selectedDates;
     }
 
-    public Map<String, Object> getInternalData() {
-        return mInternalData;
-    }
-
-    public void setInternalData(Map<String, Object> internalData) {
-        mInternalData = internalData;
+    public void refreshData() {
+        populateGrid();
     }
 
     public Map<String, Object> getExternalData() {

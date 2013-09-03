@@ -1,181 +1,148 @@
 package kpk.dev.CalendarGrid.widget.fragments;
 
+import java.util.*;
 
-import android.graphics.Rect;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.TextView;
 import kpk.dev.CalendarGrid.R;
-
 import kpk.dev.CalendarGrid.listener.CalendarLoaderListener;
 import kpk.dev.CalendarGrid.listener.OnDateClickListener;
 import kpk.dev.CalendarGrid.listener.OnDateLongClickListener;
 import kpk.dev.CalendarGrid.util.CalendarMainLoader;
 import kpk.dev.CalendarGrid.util.LogHelper;
-import kpk.dev.CalendarGrid.util.StyleHelper;
 import kpk.dev.CalendarGrid.widget.adapters.InfinitePagerAdapter;
-import kpk.dev.CalendarGrid.widget.adapters.MonthPagerAdapter;
 import kpk.dev.CalendarGrid.widget.adapters.MonthGridAdapter;
+import kpk.dev.CalendarGrid.widget.adapters.MonthPagerAdapter;
+
 import kpk.dev.CalendarGrid.widget.models.CalendarModel;
 import kpk.dev.CalendarGrid.widget.util.CalendarUtils;
-import kpk.dev.CalendarGrid.widget.util.Constants;
 import kpk.dev.CalendarGrid.widget.views.InfiniteViewPager;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
 
-import java.util.*;
-
-/**
- * Created with IntelliJ IDEA.
- * User: krasimir.karamazov
- * Date: 8/28/13
- * Time: 7:19 PM
- * To change this template use File | Settings | File Templates.
- */
-public class CalendarFragment extends Fragment implements CalendarLoaderListener {
-    private List<MonthGridAdapter> mAdapters;
-    private InfiniteViewPager mPager;
-    private InfinitePageChangeListener mPageChangeListener;
-    private List<CalendarModel> mDates;
-    private DateTime mCurrentDate;
-    private TextView mTitleView;
-    private int mCurrentMonth;
-    private int mCurrentYear;
-    private CalendarMainLoader mCalendarMainLoader;
-    private OnDateClickListener mOnDateClickListener;
-    private OnDateLongClickListener mOnDateLongClickListener;
-    public static final String EVENTS_DIALOG_TAG = "events_dialog_tag";
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.calendar_layout, container, false);
-        mCalendarMainLoader = new CalendarMainLoader(getActivity());
-        mCalendarMainLoader.setCalendarListener(this);
-        mCurrentDate = new DateTime(new Date());
-        mDates = CalendarUtils.getFullWeeks(mCurrentDate.getMonthOfYear(), mCurrentDate.getYear(), DateTimeConstants.SUNDAY);
-        mPager = (InfiniteViewPager)rootView.findViewById(R.id.pager);
-        mPager.setDatesList(mDates);
-
-        mTitleView = (TextView)rootView.findViewById(R.id.month_year_label);
-        mTitleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, StyleHelper.getInstance().getTitleTextTextSize());
-        mTitleView.setTextColor(StyleHelper.getInstance().getTitleTextTextColor());
-        mPageChangeListener = new InfinitePageChangeListener();
-        mPageChangeListener.setDateTime(mCurrentDate);
-        initGridAdapters(mCurrentDate);
-        final MonthPagerAdapter monthPagerAdapter = new MonthPagerAdapter(getActivity().getSupportFragmentManager());
-        List<MonthGridFragment> fragments = monthPagerAdapter.getFragments();
-        for(int i = 0; i < Constants.MAX_NUM_PAGES; i++){
-            MonthGridFragment fragment = fragments.get(i);
-            fragment.setGridAdapter(mAdapters.get(i));
-            fragment.setOnItemClickListener(getOnItemClickListener());
-            fragment.setOnItemLongClickListener(getInItemLongClickListener());
-        }
-        InfinitePagerAdapter infinitePagerAdapter = new InfinitePagerAdapter(monthPagerAdapter);
-        mPager.setOnPageChangeListener(mPageChangeListener);
-        mPager.setAdapter(infinitePagerAdapter);
-        mPager.setPageMargin(0);
+import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.TextView;
 
 
-        return rootView;
+public class CalendarFragment extends DialogFragment implements CalendarLoaderListener {
+    public static final int NUM_PAGES = 4;
+    private static final String EVENTS_DIALOG_TAG = "events_dialog";
+    public static final String START_DAY_OF_WEEK = "starting_day";
+    private TextView mMonthYearView;
+    private InfiniteViewPager mViewPager;
+    private CalendarPageChangeListener mPageChangeListener;
+    private List<MonthGridFragment> mFragments;
+
+    public final static String MONTH = "month";
+    public final static String YEAR = "year";
+
+    private int mMonth = -1;
+    private int mYear = -1;
+    private ArrayList<CalendarModel> mDatesList;
+    private CalendarMainLoader mLoader;
+
+    private int mStartDayOfWeek = ((Calendar.getInstance().getFirstDayOfWeek() + 5) % 7) + 1;;
+
+    private List<MonthGridAdapter> mPageAdapters = new ArrayList<MonthGridAdapter>();
+
+    private OnItemClickListener mDateItemClickListener;
+    private OnItemLongClickListener dateItemLongClickListener;
+
+    private OnDateClickListener mDateClickListener;
+    private OnDateLongClickListener mDateLongClickListener;
+
+    public MonthGridAdapter getNewDatesGridAdapter(int month, int year) {
+        return new MonthGridAdapter(getActivity(), month, year);
     }
 
-    public void showEvents(CalendarModel model) {
-        final Bundle args = new Bundle();
+    public int getCurrentYear() {
+        return mYear;
+    }
+
+    public void setCurrentYear(int year) {
+        mYear = year;
+    }
+
+    public int getCurrentMonth() {
+        return mMonth;
+    }
+
+    public void setCurrentMonth(int month) {
+        mMonth = month;
+    }
+
+    public TextView getMonthTitleTextView() {
+        return mMonthYearView;
+    }
+
+    public void setMonthTitleTextView(TextView monthTitleTextView) {
+        this.mMonthYearView = monthTitleTextView;
+    }
+
+    public Bundle getSavedStates() {
+        Bundle bundle = new Bundle();
+        bundle.putInt(MONTH, mMonth);
+        bundle.putInt(YEAR, mYear);
+        bundle.putInt(START_DAY_OF_WEEK, mStartDayOfWeek);
+
+        return bundle;
+    }
+
+    public void showDayView(CalendarModel model) {
+
+       /* Bundle args = new Bundle();
         args.putSerializable(EventsListDialogFragment.CALENDAR_MODEL_ARGS_KEY, model);
-        EventsListDialogFragment dialog = EventsListDialogFragment.getInstance(args);
-        dialog.show(getActivity().getSupportFragmentManager(), EVENTS_DIALOG_TAG);
+        EventsListDialogFragment fragment = EventsListDialogFragment.getInstance(args);
+        fragment.show(getActivity().getSupportFragmentManager(), EVENTS_DIALOG_TAG);*/
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        final DateTime pageDateTime = mPageChangeListener.getDateTime();
-        mCalendarMainLoader.resetSearch(pageDateTime, pageDateTime.plusMonths(1), mDates);
+    public void restoreStatesFromKey(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            setArguments(savedInstanceState);
+        }
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mPager.post(new Runnable() {
-            @Override
-            public void run() {
-                for(MonthGridAdapter adapter : mAdapters) {
-                    Rect r = new Rect();
-                    r.set(0, 0, mPager.getWidth(), mPager.getHeight());
-                    adapter.setDimensions(r);
-                }
-            }
-        });
+    public int getCurrentVirtualPosition() {
+        int currentPage = mViewPager.getCurrentItem();
+        return mPageChangeListener.getCurrent(currentPage);
     }
 
-    public void setOnDateClickListener(OnDateClickListener clickListener) {
-        mOnDateClickListener = clickListener;
+    public void moveToDate(Date date) {
+        moveToDateTime(CalendarUtils.convertDateToDateTime(date));
     }
 
-    public void setOnDateLongClickListener(OnDateLongClickListener longClickListener) {
-        mOnDateLongClickListener = longClickListener;
-    }
+    public void moveToDateTime(DateTime dateTime) {
 
-    private AdapterView.OnItemClickListener getOnItemClickListener() {
-        return new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(mOnDateClickListener != null) {
-                    mOnDateClickListener.onDateClick(mDates.get(position));
-                }else{
-                    LogHelper.d("native behaviour");
-                }
-            }
-        };
-    }
+        DateTime firstOfMonth = new DateTime(mYear, mMonth, 1, 0, 0);
+        DateTime lastOfMonth = firstOfMonth.dayOfMonth().withMaximumValue();
 
-    private AdapterView.OnItemLongClickListener getInItemLongClickListener() {
-        return new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if(mOnDateLongClickListener != null) {
-                    mOnDateLongClickListener.onDateLongClick(mDates.get(position));
-                }else{
-                    LogHelper.d("native behaviour");
-                }
-                return true;
-            }
-        };
-    }
+        if (dateTime.isBefore(firstOfMonth)) {
 
-    private void initGridAdapters(DateTime currentDate) {
-        mAdapters = new ArrayList<MonthGridAdapter>();
-        MonthGridAdapter adapterCurrent = generateAdapter(currentDate.getMonthOfYear(), currentDate.getYear());
-        DateTime nextMonth = currentDate.plusMonths(1);
-        MonthGridAdapter adapterNext = generateAdapter(nextMonth.getMonthOfYear(), nextMonth.getYear());
-        DateTime secondNextMonth = nextMonth.plusMonths(1);
-        MonthGridAdapter adapterSecondNext = generateAdapter(secondNextMonth.getMonthOfYear(), secondNextMonth.getYear());
-        DateTime previousMonth = currentDate.minusMonths(1);
-        MonthGridAdapter adapterPrevious = generateAdapter(previousMonth.getMonthOfYear(), previousMonth.getYear());
-        mAdapters.add(adapterCurrent);
-        mAdapters.add(adapterNext);
-        mAdapters.add(adapterSecondNext);
-        mAdapters.add(adapterPrevious);
-    }
+            DateTime firstDayNextMonth = dateTime.plusMonths(1);
 
-    private MonthGridAdapter generateAdapter(int month, int year) {
-        final MonthGridAdapter adapter = new MonthGridAdapter(getActivity(), month, year, getInternalCalendarData(), null);
-        return adapter;
-    }
+            mPageChangeListener.setCurrentDateTime(firstDayNextMonth);
+            int currentItem = mViewPager.getCurrentItem();
+            mPageChangeListener.refreshAdapters(currentItem);
 
-    private Map<String, Object> getInternalCalendarData() {
-        final Map<String, Object> internalData = new HashMap<String, Object>();
-        internalData.put(Constants.DISABLED_DATES, null);
-        internalData.put(Constants.SELECTED_DATES, null);
-        internalData.put(Constants.MIN_DATE, null);
-        internalData.put(Constants.MIN_DATE, null);
-        internalData.put(Constants.START_DAY_OF_WEEK, DateTimeConstants.SUNDAY);
-        return internalData;
+            mViewPager.setCurrentItem(currentItem - 1);
+        }
+
+        else if (dateTime.isAfter(lastOfMonth)) {
+            DateTime firstDayLastMonth = dateTime.minusMonths(1);
+
+            mPageChangeListener.setCurrentDateTime(firstDayLastMonth);
+            int currentItem = mViewPager.getCurrentItem();
+            mPageChangeListener.refreshAdapters(currentItem);
+
+            mViewPager.setCurrentItem(currentItem + 1);
+        }
+
     }
 
     public void setCalendarDate(Date date) {
@@ -183,10 +150,8 @@ public class CalendarFragment extends Fragment implements CalendarLoaderListener
     }
 
     public void setCalendarDateTime(DateTime dateTime) {
-        //month = dateTime.getMonthOfYear();
-        //year = dateTime.getYear();
-
-        // Notify listener
+        mMonth = dateTime.getMonthOfYear();
+        mYear = dateTime.getYear();
         /*if (caldroidListener != null) {
             caldroidListener.onChangeMonth(month, year);
         }*/
@@ -194,135 +159,255 @@ public class CalendarFragment extends Fragment implements CalendarLoaderListener
         refreshView();
     }
 
+    public void prevMonth() {
+        mViewPager.setCurrentItem(mPageChangeListener.getCurrentPage() - 1);
+    }
+
+    public void nextMonth() {
+        mViewPager.setCurrentItem(mPageChangeListener.getCurrentPage() + 1);
+    }
+
+    public void setOnDateClickListener(OnDateClickListener onDateClickListener) {
+        mDateClickListener = onDateClickListener;
+    }
+
+    public void setOnDateLongClickListener(OnDateLongClickListener onDateLongClickListener) {
+        mDateLongClickListener = onDateLongClickListener;
+    }
+
+    private OnItemClickListener getDateClickListener() {
+        mDateItemClickListener = new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                CalendarModel model = mDatesList.get(position);
+                if(mDateClickListener != null) {
+                    mDateClickListener.onDateClick(model);
+                }
+            }
+        };
+
+        return mDateItemClickListener;
+    }
+
+    private OnItemLongClickListener getDateLongClickListener() {
+        dateItemLongClickListener = new OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                CalendarModel model = mDatesList.get(position);
+                if(mDateLongClickListener != null) {
+                    mDateLongClickListener.onDateLongClick(model);
+                }
+                return true;
+            }
+        };
+
+        return dateItemLongClickListener;
+    }
+
     public void refreshView() {
+        mMonthYearView.setText(new DateTime(mYear, mMonth, 1, 0, 0, 0, 0).monthOfYear().getAsText().toUpperCase() + " " + mYear);
 
-
-
-        // Refresh the date grid views
-        for (MonthGridAdapter adapter : mAdapters) {
-            // Reset caldroid data
-            adapter.setInternalData(getInternalCalendarData());
-
-            // Reset extra data
-            adapter.setExternalData(null);
-
-            // Refresh view
+        for (MonthGridAdapter adapter : mPageAdapters) {
+            adapter.refreshData();
             adapter.notifyDataSetChanged();
         }
     }
 
-    @Override
-    public void dataReady(List<CalendarModel> models) {
-        mDates.clear();
-        mDates.addAll(models);
-        mPageChangeListener.getCurrentAdaper().notifyDataSetChanged();
+    private void retrieveInitialArgs(Bundle savedInstanceState) {
+        // Get arguments
+        Bundle args = getArguments();
+        if (args != null) {
+            // Get month, year
+            mMonth = args.getInt(MONTH, -1);
+            mYear = args.getInt(YEAR, -1);
+
+            mStartDayOfWeek = args.getInt(START_DAY_OF_WEEK, DateTimeConstants.SUNDAY);
+            if (mStartDayOfWeek > 7) {
+                mStartDayOfWeek = mStartDayOfWeek % 7;
+            }
+        }
+        if (mMonth == -1 || mYear == -1) {
+            DateTime dateTime = new DateTime();
+            mMonth = dateTime.getMonthOfYear();
+            mYear = dateTime.getYear();
+        }
     }
 
-    private class InfinitePageChangeListener implements ViewPager.OnPageChangeListener {
-        private DateTime mDateTime;
-        private int mCurrentPage = InfiniteViewPager.OFFSET;
-        private MonthGridAdapter mCurrentAdapter;
+    public static CalendarFragment getInstance(int month, int year) {
+        CalendarFragment f = new CalendarFragment();
 
-        public void setCurrentPage(int currentPage) {
-            this.mCurrentPage = currentPage;
+        Bundle args = new Bundle();
+        args.putInt(MONTH, month);
+        args.putInt(YEAR, year);
+
+        f.setArguments(args);
+
+        return f;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        retrieveInitialArgs(savedInstanceState);
+
+        View view = inflater.inflate(R.layout.calendar_layout, container, false);
+
+        mMonthYearView = (TextView) view.findViewById(R.id.month_year_view);
+
+        iniDateGrids(view);
+
+        refreshView();
+
+        return view;
+    }
+
+    private void iniDateGrids(View view) {
+        DateTime currentDateTime = new DateTime(mYear, mMonth, 1, 0, 0, 0);
+        mDatesList = CalendarUtils.getFullWeeks(mMonth, mYear, mStartDayOfWeek);
+        mLoader = new CalendarMainLoader(getActivity());
+        mLoader.setCalendarListener(this);
+        mLoader.resetSearch(mDatesList.get(0).getDateTime(), mDatesList.get(mDatesList.size() - 1).getDateTime(), mDatesList);
+        mPageChangeListener = new CalendarPageChangeListener();
+        mPageChangeListener.setCurrentDateTime(currentDateTime);
+
+        MonthGridAdapter adapterCurrent = getNewDatesGridAdapter(currentDateTime.getMonthOfYear(), currentDateTime.getYear());
+
+        DateTime nextDateTime = currentDateTime.plusMonths(1);
+        MonthGridAdapter adapterNext = getNewDatesGridAdapter( nextDateTime.getMonthOfYear(), nextDateTime.getYear());
+
+        DateTime next2DateTime = nextDateTime.plusMonths(1);
+        MonthGridAdapter adapterSecondNext = getNewDatesGridAdapter(next2DateTime.getMonthOfYear(), next2DateTime.getYear());
+
+        DateTime prevDateTime = currentDateTime.minusMonths(1);
+        MonthGridAdapter adapterPrev = getNewDatesGridAdapter(prevDateTime.getMonthOfYear(), prevDateTime.getYear());
+
+        mPageAdapters.add(adapterCurrent);
+        mPageAdapters.add(adapterNext);
+        mPageAdapters.add(adapterSecondNext);
+        mPageAdapters.add(adapterPrev);
+
+        mPageChangeListener.setCalendarAdapters(mPageAdapters);
+
+        mViewPager = (InfiniteViewPager) view.findViewById(R.id.pager);
+
+        mViewPager.setDateInMonthsList(mDatesList);
+
+        final MonthPagerAdapter pagerAdapter = new MonthPagerAdapter(getChildFragmentManager());
+
+        mFragments = pagerAdapter.getFragments();
+        for (int i = 0; i < NUM_PAGES; i++) {
+            MonthGridFragment dateGridFragment = mFragments.get(i);
+            MonthGridAdapter adapter = mPageAdapters.get(i);
+            dateGridFragment.setGridAdapter(adapter);
+            dateGridFragment.setOnItemClickListener(getDateClickListener());
+            dateGridFragment.setOnItemLongClickListener(getDateLongClickListener());
         }
+
+        InfinitePagerAdapter infinitePagerAdapter = new InfinitePagerAdapter(pagerAdapter);
+
+        mViewPager.setAdapter(infinitePagerAdapter);
+
+        mViewPager.setOnPageChangeListener(mPageChangeListener);
+    }
+
+    @Override
+    public void dataReady(List<CalendarModel> models) {
+
+        MonthGridAdapter adapter = mPageChangeListener.getCalendarAdapters().get(mPageChangeListener.getCurrent(mPageChangeListener.getCurrentPage()));
+        adapter.getDateTimeList().clear();
+        adapter.getDateTimeList().addAll(models);
+        adapter.notifyDataSetChanged();
+    }
+
+    public class CalendarPageChangeListener implements OnPageChangeListener {
+        private int currentPage = InfiniteViewPager.OFFSET;
+        private DateTime currentDateTime;
+        private List<MonthGridAdapter> calAdapters;
+
 
         public int getCurrentPage() {
-            return mCurrentPage;
+            return currentPage;
         }
 
-        public void setDateTime(DateTime dateTime) {
-            mDateTime = dateTime;
+        public void setCurrentPage(int currentPage) {
+            this.currentPage = currentPage;
         }
 
-        public DateTime getDateTime() {
-            return mDateTime;
+
+        public DateTime getCurrentDateTime() {
+            return currentDateTime;
         }
 
-        @Override
-        public void onPageScrolled(int i, float v, int i2) {
-            //To change body of implemented methods use File | Settings | File Templates.
+        public void setCurrentDateTime(DateTime dateTime) {
+            this.currentDateTime = dateTime;
+            setCalendarDateTime(currentDateTime);
         }
 
-        @Override
-        public void onPageSelected(int i) {
-            refreshAdapters(i);
-            mCurrentAdapter = mAdapters.get(i % Constants.MAX_NUM_PAGES);
 
-            // Refresh dateInMonthsList
-            mDates.clear();
-            mDates.addAll(mCurrentAdapter.getDateTimeList());
-            mCalendarMainLoader.resetSearch(mDateTime, mDateTime.plusMonths(1), mDates);
+        public List<MonthGridAdapter> getCalendarAdapters() {
+            return calAdapters;
         }
 
-        private MonthGridAdapter getCurrentAdaper() {
-            return mCurrentAdapter;
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int i) {
-            //To change body of implemented methods use File | Settings | File Templates.
-        }
-
-        private int getPrevious(int position) {
-            return (position + 3) % Constants.MAX_NUM_PAGES;
-        }
-
-        private int getCurrent(int position) {
-            return position % Constants.MAX_NUM_PAGES;
+        public void setCalendarAdapters(List<MonthGridAdapter> calendarAdapters) {
+            this.calAdapters = calendarAdapters;
         }
 
         private int getNext(int position) {
-            return (position + 1) % Constants.MAX_NUM_PAGES;
+            return (position + 1) % CalendarFragment.NUM_PAGES;
+        }
+
+        private int getPrevious(int position) {
+            return (position + 3) % CalendarFragment.NUM_PAGES;
+        }
+
+        public int getCurrent(int position) {
+            return position % CalendarFragment.NUM_PAGES;
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int position) {
+        }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
         }
 
         public void refreshAdapters(int position) {
-            // Get adapters to refresh
-            MonthGridAdapter currentAdapter = mAdapters.get(getCurrent(position));
-            MonthGridAdapter prevAdapter = mAdapters.get(getPrevious(position));
-            MonthGridAdapter nextAdapter = mAdapters.get(getNext(position));
+            MonthGridAdapter currentAdapter = calAdapters.get(getCurrent(position));
+            MonthGridAdapter prevAdapter = calAdapters.get(getPrevious(position));
+            MonthGridAdapter nextAdapter = calAdapters.get(getNext(position));
 
-            if (position == mCurrentPage) {
-                // Refresh current adapter
-
-                currentAdapter.setAdapterDateTime(mDateTime);
+            if (position == currentPage) {
+                currentAdapter.setAdapterDateTime(currentDateTime);
                 currentAdapter.notifyDataSetChanged();
 
-                // Refresh previous adapter
-                prevAdapter.setAdapterDateTime(mDateTime.minusMonths(1));
+                prevAdapter.setAdapterDateTime(currentDateTime.minusMonths(1));
                 prevAdapter.notifyDataSetChanged();
 
-                // Refresh next adapter
-                nextAdapter.setAdapterDateTime(mDateTime.plusMonths(1));
+                nextAdapter.setAdapterDateTime(currentDateTime.plusMonths(1));
                 nextAdapter.notifyDataSetChanged();
-            }
-            // Detect if swipe right or swipe left
-            // Swipe right
-            else if (position > mCurrentPage) {
-                // Update current date time to next month
-                mDateTime = mDateTime.plusMonths(1);
-
-                // Refresh the adapter of next gridview
-                nextAdapter.setAdapterDateTime(mDateTime.plusMonths(1));
+            }else if (position > currentPage) {
+                currentDateTime = currentDateTime.plusMonths(1);
+                nextAdapter.setAdapterDateTime(currentDateTime.plusMonths(1));
                 nextAdapter.notifyDataSetChanged();
 
-            }
-            // Swipe left
-            else {
-                // Update current date time to previous month
-                mDateTime = mDateTime.minusMonths(1);
-
-                // Refresh the adapter of previous gridview
-                prevAdapter.setAdapterDateTime(mDateTime.minusMonths(1));
+            }else {
+                currentDateTime = currentDateTime.minusMonths(1);
+                prevAdapter.setAdapterDateTime(currentDateTime.minusMonths(1));
                 prevAdapter.notifyDataSetChanged();
             }
+            currentPage = position;
+        }
 
-            // Update current page
-            mCurrentPage = position;
-            mCurrentMonth = mDateTime.getMonthOfYear();
-            mCurrentYear = mDateTime.getYear();
-            mTitleView.setText(new DateTime(mCurrentYear, mCurrentMonth, 1, 0, 0, 0, 0).monthOfYear().getAsText().toUpperCase() + " " + mCurrentYear);
+        @Override
+        public void onPageSelected(int position) {
+            refreshAdapters(position);
+            setCalendarDateTime(currentDateTime);
+            MonthGridAdapter currentAdapter = calAdapters.get(position % CalendarFragment.NUM_PAGES);
+            mDatesList.clear();
+            mDatesList.addAll(currentAdapter.getDateTimeList());
+            mLoader.resetSearch(mDatesList.get(0).getDateTime(), mDatesList.get(mDatesList.size() - 1).getDateTime(), mDatesList);
         }
 
     }
+
 }

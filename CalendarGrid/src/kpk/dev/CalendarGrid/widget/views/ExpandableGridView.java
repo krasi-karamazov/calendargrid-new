@@ -2,7 +2,9 @@ package kpk.dev.CalendarGrid.widget.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.ViewGroup;
 import android.widget.GridView;
+import kpk.dev.CalendarGrid.util.LogHelper;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,6 +25,4 @@ public class ExpandableGridView extends GridView {
     public ExpandableGridView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
-
-
 }
