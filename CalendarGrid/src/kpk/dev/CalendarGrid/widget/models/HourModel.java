@@ -10,12 +10,20 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class HourModel {
-    private List<Instance> mInstances;
+    private String mName;
     private String mHour;
     private boolean mIsFirstInSpan;
     private boolean mIsInSpan;
     public HourModel() {
 
+    }
+
+    public String getName() {
+        return mName;
+    }
+
+    public void setName(String name) {
+        mName = name;
     }
 
     public void setIsFirstInSpan(boolean firstInSpan) {
@@ -32,14 +40,6 @@ public class HourModel {
 
     public boolean getIsInSpan() {
         return mIsInSpan;
-    }
-
-    public void setInstances(List<Instance> instances) {
-        mInstances = instances;
-    }
-
-    public List<Instance> getInstances() {
-        return mInstances;
     }
 
     public void setHours(String hour) {

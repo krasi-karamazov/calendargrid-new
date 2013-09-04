@@ -41,9 +41,9 @@ public class HoursAdapter extends ArrayAdapter<HourModel> {
             }else{
                 hourLabel.setBackgroundColor(Color.RED);
             }
-            hourLabel.setText("" + getItem(position).getHour());
+            hourLabel.setText(getItem(position).getHour());
         }else{
-            hourLabel.setText("" + getItem(position).getHour());
+            hourLabel.setText(getItem(position).getHour());
         }
 
         return row;

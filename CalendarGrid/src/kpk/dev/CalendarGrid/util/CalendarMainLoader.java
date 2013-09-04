@@ -10,11 +10,13 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import kpk.dev.CalendarGrid.listener.CalendarLoaderListener;
 import kpk.dev.CalendarGrid.widget.models.CalendarModel;
 import kpk.dev.CalendarGrid.widget.models.Instance;
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +33,7 @@ public class CalendarMainLoader implements LoaderManager.LoaderCallbacks<Cursor>
     private DateTime mStartDate;
     private DateTime mEndDate;
     private static final int LOADER_ID = 10;
-    private Multimap<DateTime, Instance> mInstancesMap = HashMultimap.create();
+    private Multimap<DateTime, Instance> mInstancesMap = LinkedHashMultimap.create();
     private List<CalendarModel> mModels;
     private CalendarLoaderListener mListener;
     public CalendarMainLoader(Context context) {
@@ -86,10 +88,12 @@ public class CalendarMainLoader implements LoaderManager.LoaderCallbacks<Cursor>
             instance.setBeginTime(beginDateTime);
             instance.setEndTime(endDateTime);
             instance.setEventId(cursor.getLong(cursor.getColumnIndexOrThrow(CalendarContract.Instances.EVENT_ID)));
+            instance.setIsAllday((cursor.getInt(cursor.getColumnIndexOrThrow(CalendarContract.Instances.ALL_DAY)) == 0) ? false : true);
+            instance.setInterval(new Interval(beginTime, endTime));
             instance.setCalendarId(cursor.getLong(cursor.getColumnIndexOrThrow(CalendarContract.Instances.CALENDAR_ID)));
             String color = cursor.getString(cursor.getColumnIndexOrThrow(CalendarContract.Instances.CALENDAR_COLOR));
             instance.setCalendarColor((0xff000000 + Integer.parseInt(color)));
-
+            instance.setDuration(endDateTime.getMillis() - beginDateTime.getMillis());
             instance.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(CalendarContract.Instances.TITLE)));
             instance.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(CalendarContract.Instances.DESCRIPTION)));
             DateTime key = beginDateTime.withMillisOfDay(0);

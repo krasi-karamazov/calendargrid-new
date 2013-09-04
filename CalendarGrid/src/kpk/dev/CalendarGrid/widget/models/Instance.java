@@ -1,6 +1,7 @@
 package kpk.dev.CalendarGrid.widget.models;
 
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 import java.io.Serializable;
 
@@ -18,10 +19,46 @@ public class Instance implements Serializable {
     private int mBeginDay;
     private int mEndDay;
     private long mEventId;
+    private long mDuration;
     private long mCalendarId;
     private int mCalendarColor;
     private String mTitle;
     private String mDescription;
+    private boolean mIsAllDay;
+    private Interval mInterval;
+    private int mOverlaps;
+
+    public void setOverlaps(int overlaps) {
+       mOverlaps = overlaps;
+    }
+
+    public int getOverlaps() {
+        return mOverlaps;
+    }
+
+    public void setInterval(Interval interval) {
+        mInterval = interval;
+    }
+
+    public Interval getInterval() {
+        return mInterval;
+    }
+
+    public void setIsAllday(boolean isAllDay) {
+        mIsAllDay = isAllDay;
+    }
+
+    public boolean getIsAllday() {
+        return mIsAllDay;
+    }
+
+    public void setDuration(long duration) {
+        mDuration = duration;
+    }
+
+    public long getDuration() {
+        return mDuration;
+    }
 
     public String getTitle() {
         return mTitle;
