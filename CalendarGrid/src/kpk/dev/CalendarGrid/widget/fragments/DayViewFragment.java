@@ -48,12 +48,12 @@ public class DayViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.day_view_layout, container, false);
-        mHoursContainer = (LinearLayout)rootView.findViewById(R.id.hours_container);
-        mMainContainer = (RelativeLayout)rootView.findViewById(R.id.day_view_container);
-        mModel = (CalendarModel)getArguments().getSerializable(CALENDAR_MODEL_ARGS_KEY);
+        //mHoursContainer = (LinearLayout)rootView.findViewById(R.id.hours_container);
+        //mMainContainer = (RelativeLayout)rootView.findViewById(R.id.day_view_container);
+        //mModel = (CalendarModel)getArguments().getSerializable(CALENDAR_MODEL_ARGS_KEY);
 
-        addHoursList();
-        addEvents();
+        //addHoursList();
+        //addEvents();
         return rootView;
     }
 
@@ -128,7 +128,7 @@ public class DayViewFragment extends Fragment {
         View v = inflater.inflate(R.layout.hour_item_layout, mHoursContainer, false);
         v.setId(Integer.valueOf(model.getHour()));
         TextView tv = (TextView)v.findViewById(R.id.h_label);
-        TextView tvName = (TextView)v.findViewById(R.id.event_view);
+        TextView tvName = (TextView)v.findViewById(R.id.item_name);
         tv.setText(model.getHour());
         tvName.setText("");
         mHoursContainer.addView(v);

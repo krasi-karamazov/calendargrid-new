@@ -7,8 +7,7 @@ import android.graphics.Rect;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
+import android.widget.*;
 import kpk.dev.CalendarGrid.R;
 import kpk.dev.CalendarGrid.util.StyleHelper;
 import kpk.dev.CalendarGrid.widget.models.CalendarModel;
@@ -102,8 +101,11 @@ public class MonthGridAdapter extends BaseAdapter {
         TextView calendarCell;
         if(calendarCellContainer == null) {
             calendarCellContainer = inflater.inflate(R.layout.calendar_item, viewGroup, false);
-
+            AbsListView.LayoutParams params = (AbsListView.LayoutParams)calendarCellContainer.getLayoutParams();
+            params.height = mContext.getResources().getDisplayMetrics().heightPixels / 6;
+            calendarCellContainer.setLayoutParams(params);
         }
+
         calendarCell = (TextView)calendarCellContainer.findViewById(R.id.calendar_tv);
         calendarCell.setTextColor(Color.BLACK);
 
