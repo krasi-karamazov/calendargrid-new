@@ -2,10 +2,18 @@ package kpk.dev.CalendarGrid.widget.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import kpk.dev.CalendarGrid.R;
+import kpk.dev.CalendarGrid.util.LogHelper;
+import kpk.dev.CalendarGrid.widget.models.Instance;
+import org.joda.time.Interval;
+
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,10 +23,14 @@ import kpk.dev.CalendarGrid.R;
  * To change this template use File | Settings | File Templates.
  */
 public class BlocksLayout extends ViewGroup {
-    private int mColumns = 3;
 
     private TimeView mRulerView;
     private View mNowView;
+    private List<Instance> mInstances;
+    private int mNumColumns;
+    private List<Column> mColumns = new LinkedList<Column>();
+    private boolean mHasInstances;
+    private int mColumnWidth;
 
     public BlocksLayout(Context context) {
         this(context, null);
@@ -30,13 +42,6 @@ public class BlocksLayout extends ViewGroup {
 
     public BlocksLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-
-        /*final TypedArray a = context.obtainStyledAttributes(attrs,
-                R.styleable.BlocksLayout, defStyle, 0);*/
-
-        mColumns = 3;//a.getInt(R.styleable.TimeRulerView_headerWidth, mColumns);
-
-        //a.recycle();
     }
 
     private void ensureChildren() {
@@ -46,39 +51,86 @@ public class BlocksLayout extends ViewGroup {
         }
         mRulerView.setDrawingCacheEnabled(true);
 
-        //mNowView = findViewById(R.id.blocks_now);
-        /*if (mNowView == null) {
+        mNowView = findViewById(R.id.now_view);
+        if (mNowView == null) {
             throw new IllegalStateException("Must include a R.id.blocks_now view.");
-        }*/
-        //mNowView.setDrawingCacheEnabled(true);
+        }
+        mNowView.setDrawingCacheEnabled(true);
     }
 
-    /**
-     * Remove any {@link BlockView} instances, leaving only
-     * {@link TimeRulerView} remaining.
-     */
     public void removeAllBlocks() {
         ensureChildren();
         removeAllViews();
         addView(mRulerView);
-       // addView(mNowView);
+        addView(mNowView);
     }
 
-    /*public void addBlock(BlockView blockView) {
-        blockView.setDrawingCacheEnabled(true);
-        addView(blockView, 1);
-    }*/
+    public void setInstances(List<Instance> instances) {
+        mInstances = instances;
+        mHasInstances = true;
+        requestLayout();
+    }
+
+    private void addColumns(){
+        mColumnWidth = (mRulerView.getMeasuredWidth() - mRulerView.getHeaderWidth()) / mNumColumns;
+        for(int i = 0; i < mNumColumns; i++){
+            int columnWidth = mRulerView.getMeasuredWidth() / mNumColumns;
+            int left = (i * columnWidth);
+            int right = left + columnWidth;
+            Column col = new Column();
+            col.setLeft(left);
+            col.setRight(right);
+            mColumns.add(col);
+        }
+    }
+
+    private void getMaxOverlaps() {
+        int maxOverlaps = 0;
+        for(int i = 0; i < mInstances.size(); i++) {
+            int overlaps = 0;
+            for(int j = 0; j < mInstances.size(); j++) {
+                if(mInstances.get(i).getId() != mInstances.get(j).getId()) {
+                    Interval interval = new Interval(mInstances.get(i).getBeginTime(), mInstances.get(i).getEndTime());
+                    Interval intervalOther = new Interval(mInstances.get(j).getBeginTime(), mInstances.get(j).getEndTime());
+                    if(interval.overlap(intervalOther) != null){
+                        overlaps++;
+                    }
+                }
+            }
+            if(overlaps > maxOverlaps) {
+                maxOverlaps = overlaps;
+            }
+        }
+        mNumColumns = maxOverlaps;
+    }
+
+    private void addBlocks() {
+        for(int i = 0; i < mInstances.size(); i++) {
+            EventView event = new EventView(getContext(), mInstances.get(i).getBeginTime().getMillis(), mInstances.get(i).getEndTime().getMillis(), "Name " + i, mInstances.get(i).getCalendarColor());
+            event.setStartTime(mInstances.get(i).getBeginTime().getMillis());
+            event.setEndTime(mInstances.get(i).getEndTime().getMillis());
+            event.setId((int)mInstances.get(i).getId());
+            addView(event);
+        }
+        mHasInstances = false;
+        requestLayout();
+    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         ensureChildren();
-
         mRulerView.measure(widthMeasureSpec, heightMeasureSpec);
-//        mNowView.measure(widthMeasureSpec, heightMeasureSpec);
+        mNowView.measure(widthMeasureSpec, heightMeasureSpec);
 
         final int width = mRulerView.getMeasuredWidth();
         final int height = mRulerView.getMeasuredHeight();
+        if(mHasInstances) {
+            getMaxOverlaps();
+            addColumns();
 
+            addBlocks();
+            requestLayout();
+        }
         setMeasuredDimension(resolveSize(width, widthMeasureSpec),
                 resolveSize(height, heightMeasureSpec));
     }
@@ -89,35 +141,57 @@ public class BlocksLayout extends ViewGroup {
 
         final TimeView rulerView = mRulerView;
         final int headerWidth = rulerView.getHeaderWidth();
-        final int columnWidth = (getWidth() - headerWidth) / mColumns;
 
         rulerView.layout(0, 0, getWidth(), getHeight());
 
         final int count = getChildCount();
+        int columnIndex = 0;
         for (int i = 0; i < count; i++) {
             final View child = getChildAt(i);
-            if (child.getVisibility() == GONE) continue;
+            if (child instanceof EventView) {
 
-            /*if (child instanceof BlockView) {
-                final BlockView blockView = (BlockView) child;
+                final EventView blockView = (EventView) child;
                 final int top = rulerView.getTimeVerticalOffset(blockView.getStartTime());
                 final int bottom = rulerView.getTimeVerticalOffset(blockView.getEndTime());
-                final int left = headerWidth + (blockView.getColumn() * columnWidth);
-                final int right = left + columnWidth;
+
+                int left = headerWidth;
+                int right = left + mColumnWidth;
+
                 child.layout(left, top, right, bottom);
-            }*/
+                Rect childRect = new Rect(left, top, right, bottom);
+                for(int j = 0; j < count; j++) {
+                    View anotherChild = getChildAt(j);
+                    if(anotherChild instanceof EventView){
+                       if(anotherChild.getId() != child.getId()) {
+                           Rect anotherChildRect = new Rect(anotherChild.getLeft(), anotherChild.getTop(), anotherChild.getRight(), anotherChild.getBottom());
+                           if(childRect.intersect(anotherChildRect)){
+                               LogHelper.d("COLUMN OVERLAP " + i);
+                                
+                               left = headerWidth + (columnIndex * mColumnWidth);
+                               right = left + mColumnWidth;
+                               child.layout(left, top, right, bottom);
+                           }
+                       }
+                    }
+                }
+                if(i >= mNumColumns || columnIndex >= mNumColumns){
+                    columnIndex = 0;
+                }else{
+                    columnIndex++;
+                }
+            }
         }
 
         // Align now view to match current time
         final View nowView = mNowView;
-        //final long now = UIUtils.getCurrentTime(getContext());
+        final long now = new Date().getTime();
 
-        //final int top = rulerView.getTimeVerticalOffset(now);
-        //final int bottom = top + nowView.getMeasuredHeight();
-        //final int left = 0;
-        //final int right = getWidth();
+        final int top = rulerView.getTimeVerticalOffset(now);
+        final int bottom = top + nowView.getMeasuredHeight();
+        final int left = 0;
+        final int right = getWidth();
 
-        //nowView.layout(left, top, right, bottom);
+        nowView.layout(left, top, right, bottom);
     }
 }
 

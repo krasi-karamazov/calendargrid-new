@@ -18,6 +18,7 @@ import kpk.dev.CalendarGrid.widget.models.CalendarModel;
 import kpk.dev.CalendarGrid.widget.models.HourModel;
 import kpk.dev.CalendarGrid.widget.models.Instance;
 import kpk.dev.CalendarGrid.widget.util.InstancesComparator;
+import kpk.dev.CalendarGrid.widget.views.BlocksLayout;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
@@ -37,6 +38,7 @@ public class DayViewFragment extends Fragment {
     private CalendarModel mModel;
     private LinearLayout mHoursContainer;
     private RelativeLayout mMainContainer;
+    private BlocksLayout mBlocksLayout;
     private List<Instance> mInstances;
 
     public static DayViewFragment getInstance(Bundle args) {
@@ -48,10 +50,11 @@ public class DayViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.day_view_layout, container, false);
+        mBlocksLayout = (BlocksLayout)rootView.findViewById(R.id.blocks);
         //mHoursContainer = (LinearLayout)rootView.findViewById(R.id.hours_container);
         //mMainContainer = (RelativeLayout)rootView.findViewById(R.id.day_view_container);
-        //mModel = (CalendarModel)getArguments().getSerializable(CALENDAR_MODEL_ARGS_KEY);
-
+        mModel = (CalendarModel)getArguments().getSerializable(CALENDAR_MODEL_ARGS_KEY);
+        mBlocksLayout.setInstances(mModel.getInstances());
         //addHoursList();
         //addEvents();
         return rootView;

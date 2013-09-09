@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent" android:layout_height="match_parent"
         android:background="@android:color/white">
     <kpk.dev.CalendarGrid.widget.views.BlocksLayout
-
-            android:id="@+id/blocks"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layerType="software"
-            >
+        android:id="@+id/blocks"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
         <kpk.dev.CalendarGrid.widget.views.TimeView
             android:id="@+id/blocks_ruler"
-
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"/>
-
+            android:layout_width="fill_parent" android:layout_height="wrap_content"/>
+        <View
+            android:id="@+id/now_view"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:background="@drawable/now_bar"/>
     </kpk.dev.CalendarGrid.widget.views.BlocksLayout>
     <!--<ScrollView
         android:id="@+id/hours_list"
@@ -33,4 +30,4 @@
         </RelativeLayout>
 
     </ScrollView>-->
-</LinearLayout>
+</ScrollView>

@@ -87,7 +87,9 @@ public class CalendarMainLoader implements LoaderManager.LoaderCallbacks<Cursor>
             instance.setEndDay(endDateTime.getDayOfMonth());
             instance.setBeginTime(beginDateTime);
             instance.setEndTime(endDateTime);
+            instance.setId(cursor.getLong(cursor.getColumnIndexOrThrow(CalendarContract.Instances._ID)));
             instance.setEventId(cursor.getLong(cursor.getColumnIndexOrThrow(CalendarContract.Instances.EVENT_ID)));
+            instance.setEventId(cursor.getLong(cursor.getColumnIndexOrThrow(CalendarContract.Instances._ID)));
             instance.setIsAllday((cursor.getInt(cursor.getColumnIndexOrThrow(CalendarContract.Instances.ALL_DAY)) == 0) ? false : true);
             instance.setInterval(new Interval(beginTime, endTime));
             instance.setCalendarId(cursor.getLong(cursor.getColumnIndexOrThrow(CalendarContract.Instances.CALENDAR_ID)));

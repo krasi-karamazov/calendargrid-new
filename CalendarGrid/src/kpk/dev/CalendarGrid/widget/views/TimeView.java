@@ -8,7 +8,9 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.text.format.Time;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.View;
+import org.joda.time.DateTime;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,7 +29,7 @@ public class TimeView extends View {
     private int mLabelColor = Color.BLACK;
     private int mDividerColor = Color.LTGRAY;
     private int mStartHour = 0;
-    private int mEndHour = 23;
+    private int mEndHour = 24;
 
     public TimeView(Context context) {
         this(context, null);
@@ -39,39 +41,25 @@ public class TimeView extends View {
 
     public TimeView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        mHourHeight = dpToPx(60);
+    }
 
-        /*final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TimeRulerView,
-                defStyle, 0);
-
-        mHeaderWidth = a.getDimensionPixelSize(R.styleable.TimeRulerView_headerWidth,
-                mHeaderWidth);
-        mHourHeight = a
-                .getDimensionPixelSize(R.styleable.TimeRulerView_hourHeight, mHourHeight);
-        mHorizontalDivider = a.getBoolean(R.styleable.TimeRulerView_horizontalDivider,
-                mHorizontalDivider);
-        mLabelTextSize = a.getDimensionPixelSize(R.styleable.TimeRulerView_labelTextSize,
-                mLabelTextSize);
-        mLabelPaddingLeft = a.getDimensionPixelSize(R.styleable.TimeRulerView_labelPaddingLeft,
-                mLabelPaddingLeft);
-        mLabelColor = a.getColor(R.styleable.TimeRulerView_labelColor, mLabelColor);
-        mDividerColor = a.getColor(R.styleable.TimeRulerView_dividerColor, mDividerColor);
-        mStartHour = a.getInt(R.styleable.TimeRulerView_startHour, mStartHour);
-        mEndHour = a.getInt(R.styleable.TimeRulerView_endHour, mEndHour);
-
-        a.recycle();*/
+    public int dpToPx(int dp) {
+        DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
+        int px = Math.round(dp * (displayMetrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT));
+        return px;
     }
 
     /**
-     * Return the vertical offset (in pixels) for a requested time (in
-     * milliseconds since epoch).
+     *
+     * @param timeMillis - required time
+     * @return offset from top
      */
-    /*public int getTimeVerticalOffset(long timeMillis) {
-        Time time = new Time(UIUtils.CONFERENCE_TIME_ZONE.getID());
-        time.set(timeMillis);
-
-        final int minutes = ((time.hour - mStartHour) * 60) + time.minute;
+    public int getTimeVerticalOffset(long timeMillis) {
+        DateTime time = new DateTime(timeMillis);
+        final int minutes = ((time.getHourOfDay() - mStartHour) * 60) + time.getMinuteOfHour();
         return (minutes * mHourHeight) / 60;
-    }*/
+    }
 
     @Override
     protected synchronized void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -109,18 +97,13 @@ public class TimeView extends View {
 
         final int right = getRight();
 
-        // Walk left side of canvas drawing timestamps
         final int hours = mEndHour - mStartHour;
         for (int i = 0; i < hours; i++) {
             final int dividerY = hourHeight * i;
             final int nextDividerY = hourHeight * (i + 1);
             canvas.drawLine(0, dividerY, right, dividerY, dividerPaint);
-
-            // draw text title for timestamp
             canvas.drawRect(0, dividerY, mHeaderWidth, nextDividerY, dividerPaint);
 
-            // TODO: localize these labels better, including handling
-            // 24-hour mode when set in framework.
             final int hour = mStartHour + i;
             String label;
             if (hour == 0) {

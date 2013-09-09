@@ -27,6 +27,7 @@ public class Instance implements Serializable {
     private boolean mIsAllDay;
     private Interval mInterval;
     private int mOverlaps;
+    private long mId;
 
     public void setOverlaps(int overlaps) {
        mOverlaps = overlaps;
@@ -130,5 +131,13 @@ public class Instance implements Serializable {
 
     public void setEventId(long mEventId) {
         this.mEventId = mEventId;
+    }
+
+    public long getId() {
+        return mId;
+    }
+
+    public void setId(long id) {
+        this.mId = id;
     }
 }
