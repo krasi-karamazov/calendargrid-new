@@ -7,7 +7,7 @@ package kpk.dev.CalendarGrid.widget.adapters;
  * Time: 1:15 AM
  * To change this template use File | Settings | File Templates.
  */
-import android.os.Parcelable;
+
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;

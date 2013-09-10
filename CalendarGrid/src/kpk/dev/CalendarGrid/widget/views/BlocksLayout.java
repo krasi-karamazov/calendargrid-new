@@ -1,13 +1,11 @@
 package kpk.dev.CalendarGrid.widget.views;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import kpk.dev.CalendarGrid.R;
-import kpk.dev.CalendarGrid.util.LogHelper;
 import kpk.dev.CalendarGrid.widget.models.Instance;
 import org.joda.time.Interval;
 
@@ -92,7 +90,8 @@ public class BlocksLayout extends ViewGroup {
                 if(mInstances.get(i).getId() != mInstances.get(j).getId()) {
                     Interval interval = new Interval(mInstances.get(i).getBeginTime(), mInstances.get(i).getEndTime());
                     Interval intervalOther = new Interval(mInstances.get(j).getBeginTime(), mInstances.get(j).getEndTime());
-                    if(interval.overlap(intervalOther) != null){
+                    boolean overlap = interval.overlaps(intervalOther);
+                    if(overlap){
                         overlaps++;
                     }
                 }
@@ -156,33 +155,26 @@ public class BlocksLayout extends ViewGroup {
 
                 int left = headerWidth;
                 int right = left + mColumnWidth;
-
-                child.layout(left, top, right, bottom);
                 Rect childRect = new Rect(left, top, right, bottom);
                 for(int j = 0; j < count; j++) {
                     View anotherChild = getChildAt(j);
                     if(anotherChild instanceof EventView){
                        if(anotherChild.getId() != child.getId()) {
                            Rect anotherChildRect = new Rect(anotherChild.getLeft(), anotherChild.getTop(), anotherChild.getRight(), anotherChild.getBottom());
-                           if(childRect.intersect(anotherChildRect)){
-                               LogHelper.d("COLUMN OVERLAP " + i);
-                                
-                               left = headerWidth + (columnIndex * mColumnWidth);
-                               right = left + mColumnWidth;
-                               child.layout(left, top, right, bottom);
+                           if(childRect.intersect(anotherChildRect) || childRect.intersects(anotherChildRect.left, anotherChildRect.top, anotherChildRect.right, anotherChildRect.bottom) || childRect.contains(anotherChildRect) || anotherChildRect.contains(childRect)) {
+                               columnIndex++;
+                               childRect.left = headerWidth + (columnIndex * mColumnWidth);
+                               childRect.right = childRect.left + mColumnWidth;
                            }
                        }
                     }
                 }
-                if(i >= mNumColumns || columnIndex >= mNumColumns){
-                    columnIndex = 0;
-                }else{
-                    columnIndex++;
-                }
+
+                columnIndex = 0;
+                child.layout(childRect.left, childRect.top, childRect.right, childRect.bottom);
             }
         }
 
-        // Align now view to match current time
         final View nowView = mNowView;
         final long now = new Date().getTime();
 

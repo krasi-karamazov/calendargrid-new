@@ -1,29 +1,24 @@
 package kpk.dev.CalendarGrid.widget.fragments;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import kpk.dev.CalendarGrid.R;
 import kpk.dev.CalendarGrid.util.LogHelper;
-import kpk.dev.CalendarGrid.widget.adapters.HoursAdapter;
 import kpk.dev.CalendarGrid.widget.models.CalendarModel;
 import kpk.dev.CalendarGrid.widget.models.HourModel;
 import kpk.dev.CalendarGrid.widget.models.Instance;
-import kpk.dev.CalendarGrid.widget.util.InstancesComparator;
 import kpk.dev.CalendarGrid.widget.views.BlocksLayout;
-import org.joda.time.DateTime;
-import org.joda.time.Interval;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**

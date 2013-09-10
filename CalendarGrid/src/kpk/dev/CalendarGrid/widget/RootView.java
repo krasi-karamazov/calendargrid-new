@@ -13,9 +13,11 @@ import android.widget.FrameLayout;
 import kpk.dev.CalendarGrid.R;
 import kpk.dev.CalendarGrid.listener.OnDateClickListener;
 import kpk.dev.CalendarGrid.listener.OnDateLongClickListener;
-import kpk.dev.CalendarGrid.util.StyleHelper;
+import kpk.dev.CalendarGrid.util.LogHelper;
+import kpk.dev.CalendarGrid.widget.util.StyleHelper;
 import kpk.dev.CalendarGrid.widget.fragments.CalendarFragment;
 import kpk.dev.CalendarGrid.widget.fragments.DayViewFragment;
+import kpk.dev.CalendarGrid.widget.fragments.EventsListDialogFragment;
 import kpk.dev.CalendarGrid.widget.models.CalendarModel;
 import kpk.dev.CalendarGrid.widget.util.CalendarState;
 import org.joda.time.DateTime;
@@ -34,6 +36,8 @@ public class RootView extends FrameLayout {
     private OnDateLongClickListener mLongClickListener;
     public static final int ID = 666;
     private static final String FRAGMENT_TAG = "calendar_fragment";
+    private Bundle mSavedState;
+    private boolean mFragmentAdded = false;
     public RootView(Context context) {
         super(context);
         init();
@@ -57,24 +61,45 @@ public class RootView extends FrameLayout {
             styleHelper.setCurrentMonthTextColor(arr.getColor(R.styleable.MMCalendar_dates_from_current_month_text_color, Color.BLACK));
             styleHelper.setNextMonthTextColor(arr.getColor(R.styleable.MMCalendar_dates_from_next_month_text_color, Color.LTGRAY));
             styleHelper.setPreviousMonthTextColor(arr.getColor(R.styleable.MMCalendar_dates_from_previous_month_text_color, Color.LTGRAY));
-            styleHelper.setCurrentMonthTextSize(arr.getDimension(R.styleable.MMCalendar_dates_from_current_month_text_size, 14f));
-            styleHelper.setNextMonthTextSize(arr.getDimension(R.styleable.MMCalendar_dates_from_next_month_text_size, 14f));
-            styleHelper.setPreviousMonthTextSize(arr.getDimension(R.styleable.MMCalendar_dates_from_previous_month_text_size, 14f));
-
             styleHelper.setCurrentDateBackgroundDrawable(arr.getResourceId(R.styleable.MMCalendar_current_date_background_drawable, R.drawable.cell_bg));
             styleHelper.setNextMonthBackgroundDrawable(arr.getResourceId(R.styleable.MMCalendar_next_month_dates_background_drawable, R.drawable.calendar_item_backgorund_not_in_month));
             styleHelper.setPreviousMonthBackgroundDrawable(arr.getResourceId(R.styleable.MMCalendar_previous_month_dates_background_drawable, R.drawable.calendar_item_backgorund_not_in_month));
             styleHelper.setCurrentMonthBackgroundDrawable(arr.getResourceId(R.styleable.MMCalendar_dates_from_current_month_background_drawable, R.drawable.cell_bg));
-            styleHelper.setTitleTextTextSize(arr.getDimension(R.styleable.MMCalendar_month_year_text_size, 20f));
             styleHelper.setTitleTextTextColor(arr.getColor(R.styleable.MMCalendar_month_year_text_color, Color.BLACK));
-
-            styleHelper.setCurrentDateTextSize(arr.getDimension(R.styleable.MMCalendar_current_date_text_size, 14f));
             styleHelper.setCurrentDateTextColor(arr.getColor(R.styleable.MMCalendar_current_date_text_color, Color.RED));
-            styleHelper.setTitleTextGravity(arr.getInteger(R.styleable.MMCalendar_title_text_gravity, 0));
-            styleHelper.setShouldShowEvents(arr.getBoolean(R.styleable.MMCalendar_should_show_calendar_events, false));
+            styleHelper.setDisplayType(arr.getInteger(R.styleable.MMCalendar_events_display_type, 0));
+            styleHelper.setShouldShowArrows(arr.getBoolean(R.styleable.MMCalendar_should_show_calendar_arrows, false));
             styleHelper.setCalendarName(arr.getString(R.styleable.MMCalendar_calendar_name));
+            styleHelper.setEventDatesDrawable(arr.getResourceId(R.styleable.MMCalendar_event_dates_drawable, -1));
+            if(styleHelper.getShouldShowArrows()){
+                styleHelper.setLeftArrowDrawable(arr.getResourceId(R.styleable.MMCalendar_left_arrow_drawable, R.drawable.arrow_left));
+                styleHelper.setRightArrowDrawable(arr.getResourceId(R.styleable.MMCalendar_right_arrow_drawable, R.drawable.arrow_right));
+            }
         }finally {
             arr.recycle();
+        }
+    }
+
+    public void setCalendarName(String calendarName) {
+        StyleHelper.getInstance().setCalendarName(calendarName);
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        if(!mFragmentAdded) {
+            CalendarFragment fragment = new CalendarFragment();
+            fragment.setParentHeight(this.getHeight());
+            fragment.setOnDateLongClickListener(mLongClickListener);
+            fragment.setOnDateClickListener(mClickListener);
+            FragmentTransaction ft = ((FragmentActivity) getContext()).getSupportFragmentManager().beginTransaction();
+            if(mSavedState != null){
+                fragment.restoreStatesFromKey(mSavedState);
+            }
+            ft.replace(this.getId(), fragment, FRAGMENT_TAG);
+            ft.commit();
+
+            mFragmentAdded = true;
         }
     }
 
@@ -93,39 +118,46 @@ public class RootView extends FrameLayout {
         mLongClickListener = listener;
     }
 
-    public void showEvents(CalendarModel model) {
-        CalendarFragment fragment = (CalendarFragment)((FragmentActivity) getContext()).getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-        if(fragment != null) {
-            fragment.showDayView(model);
+    public void showDayView(CalendarModel model) {
+        if(model.getInstances() == null || model.getInstances().size() == 0){
+            return;
+        }
+        switch(StyleHelper.getInstance().getDisplayType()){
+            case 0:
+                showDialog(model);
+                break;
+            case 1:
+                 displayDayView(model);
+                 break;
+             default:
+                 showDialog(model);
+                 break;
         }
     }
 
-    public void showDayView(CalendarModel model) {
+    private void showDialog(CalendarModel model) {
+        Bundle args = new Bundle();
+        args.putSerializable(EventsListDialogFragment.CALENDAR_MODEL_ARGS_KEY, model);
+        EventsListDialogFragment fragment = EventsListDialogFragment.getInstance(args);
+        fragment.show(((FragmentActivity) getContext()).getSupportFragmentManager(), FRAGMENT_TAG);
+    }
+
+    private void displayDayView(CalendarModel model){
         Bundle args = new Bundle();
         args.putSerializable(DayViewFragment.CALENDAR_MODEL_ARGS_KEY, model);
         DayViewFragment dayViewFragment = DayViewFragment.getInstance(args);
         FragmentTransaction ft = ((FragmentActivity) getContext()).getSupportFragmentManager().beginTransaction();
         ft.add(this.getId(), dayViewFragment, " ");
-        ft.addToBackStack("bla");
+        ft.addToBackStack("mmcalendar");
         ft.commit();
-        /*CalendarFragment fragment = (CalendarFragment)((FragmentActivity) getContext()).getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-        if(fragment != null) {
-            fragment.showDayView(model);
-        }*/
     }
 
+    /**
+     * Called in onCreate in activity to set saved state
+     * @param savedInstanceState
+     */
     public void initCalendar(Bundle savedInstanceState) {
-        CalendarFragment fragment = new CalendarFragment();
-        fragment.setOnDateLongClickListener(mLongClickListener);
-        fragment.setOnDateClickListener(mClickListener);
-        FragmentTransaction ft = ((FragmentActivity) getContext()).getSupportFragmentManager().beginTransaction();
-        DateTime time = new DateTime(new Date());
-        if(savedInstanceState != null){
-            fragment.restoreStatesFromKey(savedInstanceState);
-        }
-        ft.replace(this.getId(), fragment, FRAGMENT_TAG);
-        ft.commit();
-
+        mSavedState = savedInstanceState;
     }
 
     @Override
@@ -137,7 +169,7 @@ public class RootView extends FrameLayout {
             state.setMonth(fragment.getCurrentMonth());
             state.setYear(fragment.getCurrentYear());
         }
-        return state;    //To change body of overridden methods use File | Settings | File Templates.
+        return state;
     }
 
     @Override

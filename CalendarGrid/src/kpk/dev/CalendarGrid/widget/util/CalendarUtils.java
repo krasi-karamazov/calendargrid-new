@@ -8,23 +8,17 @@ package kpk.dev.CalendarGrid.widget.util;
  * To change this template use File | Settings | File Templates.
  */
 
+import kpk.dev.CalendarGrid.widget.models.CalendarModel;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-import kpk.dev.CalendarGrid.widget.models.CalendarModel;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
-/**
- * Convenient helper to work with date, JODA DateTime and String
- *
- * @author thomasdao
- *
- */
 public class CalendarUtils {
 
     /**

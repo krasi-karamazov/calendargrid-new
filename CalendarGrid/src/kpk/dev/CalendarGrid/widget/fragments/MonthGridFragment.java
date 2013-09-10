@@ -9,15 +9,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import kpk.dev.CalendarGrid.R;
-import kpk.dev.CalendarGrid.listener.OnDateClickListener;
-import kpk.dev.CalendarGrid.listener.OnDateLongClickListener;
-import kpk.dev.CalendarGrid.util.LogHelper;
 import kpk.dev.CalendarGrid.widget.adapters.MonthGridAdapter;
-import kpk.dev.CalendarGrid.widget.util.Constants;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeConstants;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +29,11 @@ public class MonthGridFragment extends Fragment {
     private AdapterView.OnItemClickListener mOnItemClickListener;
     private AdapterView.OnItemLongClickListener mOnItemLongClickListener;
     private Map<String, Object> mInternalData;
+    private int mParentHeight;
+
+    public void setParentHeight(int parentHeight) {
+        mParentHeight = parentHeight;
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -79,7 +78,7 @@ public class MonthGridFragment extends Fragment {
         if(mAdapter != null) {
             mGridView.setAdapter(mAdapter);
         }else{
-            mAdapter = new MonthGridAdapter(getActivity(), monthToDisplay.getMonthOfYear(), monthToDisplay.getYear());
+            mAdapter = new MonthGridAdapter(getActivity(), monthToDisplay.getMonthOfYear(), monthToDisplay.getYear(), mParentHeight);
             mGridView.setAdapter(mAdapter);
         }
 

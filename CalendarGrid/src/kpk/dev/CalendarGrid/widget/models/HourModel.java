@@ -1,7 +1,5 @@
 package kpk.dev.CalendarGrid.widget.models;
 
-import java.util.List;
-
 /**
  * Created with IntelliJ IDEA.
  * User: krasimir.karamazov

@@ -3,13 +3,13 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
     <GridView
         android:id="@+id/calendar_gridview"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_width="match_parent" android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:gravity="center_horizontal"
         android:numColumns="7"
-        android:listSelector="@color/caldroid_transparent"
+        android:listSelector="@color/calendar_transparent"
         android:padding="1dp" android:stretchMode="columnWidth"
         android:verticalSpacing="1dp" android:horizontalSpacing="1dp"
-        android:background="@color/caldroid_lighter_gray"/>
+        android:background="@color/calendar_lighter_gray"/>
 </FrameLayout>
 

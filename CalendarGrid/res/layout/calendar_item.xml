@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="@drawable/today_drawable">
-    <kpk.dev.CalendarGrid.widget.views.SquareTextView
+    <TextView
         android:id="@+id/calendar_tv"
         android:layout_width="match_parent" android:layout_height="match_parent"
         android:layout_margin="5dp"

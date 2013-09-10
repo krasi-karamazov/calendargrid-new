@@ -1,14 +1,12 @@
 package kpk.dev.CalendarGrid.widget.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import kpk.dev.CalendarGrid.R;
-
 import kpk.dev.CalendarGrid.widget.models.Instance;
 
 import java.util.List;

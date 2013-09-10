@@ -3,13 +3,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent" android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/month_year_container"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_alignParentTop="true">
+        <ImageView
+            android:id="@+id/arrow_left"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:scaleType="centerInside"/>
+
+        <ImageView
+            android:id="@+id/arrow_right"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:scaleType="centerInside"/>
+    </RelativeLayout>
     <TextView
         android:id="@+id/month_year_view"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_centerInParent="true" android:layout_below="@+id/month_year_container"
         android:textSize="20sp"/>
+
     <kpk.dev.CalendarGrid.widget.views.InfiniteViewPager
         android:id="@+id/pager"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_width="match_parent" android:layout_height="match_parent"
         android:layout_below="@+id/month_year_view" />
 </RelativeLayout>

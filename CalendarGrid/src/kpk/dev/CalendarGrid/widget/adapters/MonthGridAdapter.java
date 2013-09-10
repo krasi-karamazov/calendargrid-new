@@ -1,18 +1,20 @@
 package kpk.dev.CalendarGrid.widget.adapters;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AbsListView;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
 import kpk.dev.CalendarGrid.R;
-import kpk.dev.CalendarGrid.util.StyleHelper;
+import kpk.dev.CalendarGrid.widget.util.StyleHelper;
 import kpk.dev.CalendarGrid.widget.models.CalendarModel;
 import kpk.dev.CalendarGrid.widget.util.CalendarUtils;
-import kpk.dev.CalendarGrid.widget.util.Constants;
+import kpk.dev.CalendarGrid.widget.util.Utils;
 import org.joda.time.DateTime;
 
 import java.util.*;
@@ -38,29 +40,17 @@ public class MonthGridAdapter extends BaseAdapter {
     protected List<DateTime> mDisabledDates;
     protected List<DateTime> mSelectedDates;
 
-    //search optimization attempt
-    protected Map<DateTime, Integer> mDisabledDatesMap = new HashMap<DateTime, Integer>();
-    protected Map<DateTime, Integer> mSelectedDatesMap = new HashMap<DateTime, Integer>();
-
-    private Map<String, Object> mInternalData;
-    private Map<String, Object> mClientData;
-
     private View.OnTouchListener mTouchListener;
     private View.OnLongClickListener mLongClickListener;
+    private int mContainerHeight;
 
 
-    public MonthGridAdapter(Context context, int month, int year) {
+    public MonthGridAdapter(Context context, int month, int year, int containerHeight) {
         mContext = context;
         mMonth = month;
         mYear = year;
-
+        mContainerHeight = containerHeight;
         populateGrid();
-    }
-
-    public void setDimensions(Rect r) {
-        //mParentWidth = r.width();
-        //mParentHeight = r.height();
-        notifyDataSetChanged();
     }
 
     private void populateGrid() {
@@ -77,11 +67,9 @@ public class MonthGridAdapter extends BaseAdapter {
         return mToday;
     }
 
-
-
     @Override
     public int getCount() {
-        return mDateTimeList.size();  //To change body of implemented methods use File | Settings | File Templates.
+        return mDateTimeList.size();
     }
 
     @Override
@@ -102,7 +90,7 @@ public class MonthGridAdapter extends BaseAdapter {
         if(calendarCellContainer == null) {
             calendarCellContainer = inflater.inflate(R.layout.calendar_item, viewGroup, false);
             AbsListView.LayoutParams params = (AbsListView.LayoutParams)calendarCellContainer.getLayoutParams();
-            params.height = mContext.getResources().getDisplayMetrics().heightPixels / 6;
+            params.height = (mContainerHeight / 6) - Utils.dpToPx(7, mContext);
             calendarCellContainer.setLayoutParams(params);
         }
 
@@ -112,21 +100,25 @@ public class MonthGridAdapter extends BaseAdapter {
         DateTime cellTime = mDateTimeList.get(i).getDateTime();
 
         if (cellTime.equals(getToday())) {
-            calendarCellContainer.setBackgroundResource(R.drawable.today_drawable);
-
+            calendarCellContainer.setBackgroundResource(StyleHelper.getInstance().getCurrentDateBackgroundDrawable());
+            calendarCell.setTextColor(StyleHelper.getInstance().getCurrentDateTextColor());
         } else if(cellTime.getMonthOfYear() < this.mMonth) {
-            calendarCellContainer.setBackgroundResource(R.drawable.cell_bg_not_in_current_month);
+            calendarCellContainer.setBackgroundResource(StyleHelper.getInstance().getPreviousMonthBackgroundDrawable());
             calendarCell.setTextColor(StyleHelper.getInstance().getPreviousMonthTextColor());
         }else if(cellTime.getMonthOfYear() > this.mMonth){
-            calendarCellContainer.setBackgroundResource(R.drawable.cell_bg_not_in_current_month);
+            calendarCellContainer.setBackgroundResource(StyleHelper.getInstance().getNextMonthBackgroundDrawable());
             calendarCell.setTextColor(StyleHelper.getInstance().getNextMonthTextColor());
         }else{
-            calendarCellContainer.setBackgroundResource(R.drawable.cell_bg);
+            calendarCellContainer.setBackgroundResource(StyleHelper.getInstance().getCurrentMonthBackgroundDrawable());
             calendarCell.setTextColor(StyleHelper.getInstance().getCurrentMonthTextColor());
         }
 
         if(mDateTimeList.get(i).getInstances() != null && mDateTimeList.get(i).getInstances().size() > 0) {
             calendarCell.setTextColor(Color.MAGENTA);
+            if(StyleHelper.getInstance().getEventDatesDrawable() != -1) {
+                Drawable drawable = mContext.getResources().getDrawable(StyleHelper.getInstance().getEventDatesDrawable());
+                calendarCell.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+            }
         }
 
         calendarCell.setText(cellTime.getDayOfMonth() + "");
@@ -208,13 +200,5 @@ public class MonthGridAdapter extends BaseAdapter {
 
     public void refreshData() {
         populateGrid();
-    }
-
-    public Map<String, Object> getExternalData() {
-        return mClientData;
-    }
-
-    public void setExternalData(Map<String, Object> externalData) {
-        mClientData = externalData;
     }
 }

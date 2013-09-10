@@ -13,7 +13,6 @@ import java.util.List;
 public class Column {
     private int mLeft;
     private int mRight;
-    private List<Integer> mHours = new LinkedList<Integer>();
     public void setLeft(int left) {
         mLeft = left;
     }

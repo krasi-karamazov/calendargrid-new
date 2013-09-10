@@ -1,15 +1,14 @@
 package kpk.dev.CalendarGrid.widget.views;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.text.format.Time;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.view.View;
+import android.widget.ScrollView;
+import kpk.dev.CalendarGrid.widget.util.Utils;
 import org.joda.time.DateTime;
 
 /**
@@ -19,10 +18,10 @@ import org.joda.time.DateTime;
  * Time: 12:42 AM
  * To change this template use File | Settings | File Templates.
  */
-public class TimeView extends View {
+public class TimeView extends ScrollView {
 
-    private int mHeaderWidth = 70;
-    private int mHourHeight = 90;
+    private int mHeaderWidth = 40;
+    private int mHourHeight = 60;
     private boolean mHorizontalDivider = true;
     private int mLabelTextSize = 20;
     private int mLabelPaddingLeft = 8;
@@ -41,13 +40,7 @@ public class TimeView extends View {
 
     public TimeView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        mHourHeight = dpToPx(60);
-    }
-
-    public int dpToPx(int dp) {
-        DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
-        int px = Math.round(dp * (displayMetrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT));
-        return px;
+        mHourHeight = Utils.dpToPx(60, getContext());
     }
 
     /**
@@ -74,6 +67,7 @@ public class TimeView extends View {
 
     private Paint mDividerPaint = new Paint();
     private Paint mLabelPaint = new Paint();
+
 
     @Override
     protected synchronized void onDraw(Canvas canvas) {

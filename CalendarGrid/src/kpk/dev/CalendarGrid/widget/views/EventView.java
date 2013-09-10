@@ -1,7 +1,6 @@
 package kpk.dev.CalendarGrid.widget.views;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.widget.Button;

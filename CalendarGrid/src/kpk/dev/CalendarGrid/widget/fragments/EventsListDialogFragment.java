@@ -1,24 +1,19 @@
 package kpk.dev.CalendarGrid.widget.fragments;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ListAdapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import kpk.dev.CalendarGrid.R;
-import kpk.dev.CalendarGrid.util.CalendarEventsLoader;
 import kpk.dev.CalendarGrid.widget.adapters.EventsListAdapter;
 import kpk.dev.CalendarGrid.widget.models.CalendarModel;
-import kpk.dev.CalendarGrid.widget.models.Event;
 import kpk.dev.CalendarGrid.widget.models.Instance;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -53,11 +48,24 @@ public class EventsListDialogFragment extends DialogFragment {
         View rootView = inflater.inflate(R.layout.events_dialog_layout, null, false);
         dialog.setContentView(rootView);
         mEventsListView = (ListView)rootView.findViewById(R.id.events_list);
+        mEventsListView.setOnItemClickListener(getOnItemClickListener());
         CalendarModel model = (CalendarModel)getArguments().getSerializable(CALENDAR_MODEL_ARGS_KEY);
         mInstances = model.getInstances();
-        mAdapter = new EventsListAdapter(getActivity(), mInstances);
-        mEventsListView.setAdapter(mAdapter);
+        if(mInstances != null) {
+            mAdapter = new EventsListAdapter(getActivity(), mInstances);
+            mEventsListView.setAdapter(mAdapter);
+        }
+
         dialog.setTitle(model.getDateTime().toString("dd MMMM yyyy"));
         return dialog;
+    }
+
+    private AdapterView.OnItemClickListener getOnItemClickListener() {
+        return new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+            }
+        };
     }
 }

@@ -3,13 +3,14 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent" android:layout_height="match_parent"
-        android:background="@android:color/white">
+    android:background="@android:color/white">
     <kpk.dev.CalendarGrid.widget.views.BlocksLayout
         android:id="@+id/blocks"
         android:layout_width="fill_parent" android:layout_height="wrap_content">
         <kpk.dev.CalendarGrid.widget.views.TimeView
             android:id="@+id/blocks_ruler"
-            android:layout_width="fill_parent" android:layout_height="wrap_content"/>
+            android:layout_width="fill_parent" android:layout_height="wrap_content">
+        </kpk.dev.CalendarGrid.widget.views.TimeView>
         <View
             android:id="@+id/now_view"
             android:layout_width="fill_parent" android:layout_height="wrap_content"
