@@ -7,6 +7,10 @@
     <kpk.dev.CalendarGrid.widget.views.BlocksLayout
         android:id="@+id/blocks"
         android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/all_day_events_container"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:visibility="gone"/>
         <kpk.dev.CalendarGrid.widget.views.TimeView
             android:id="@+id/blocks_ruler"
             android:layout_width="fill_parent" android:layout_height="wrap_content">
@@ -16,19 +20,4 @@
             android:layout_width="fill_parent" android:layout_height="wrap_content"
             android:background="@drawable/now_bar"/>
     </kpk.dev.CalendarGrid.widget.views.BlocksLayout>
-    <!--<ScrollView
-        android:id="@+id/hours_list"
-        android:layout_width="match_parent" android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:divider="#333333" android:dividerHeight="1dp">
-        <RelativeLayout
-            android:id="@+id/day_view_container"
-            android:layout_width="match_parent" android:layout_height="wrap_content">
-            <LinearLayout
-                android:id="@+id/hours_container"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="vertical"/>
-        </RelativeLayout>
-
-    </ScrollView>-->
 </ScrollView>

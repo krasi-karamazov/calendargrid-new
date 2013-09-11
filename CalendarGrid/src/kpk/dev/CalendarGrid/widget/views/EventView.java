@@ -17,6 +17,7 @@ public class EventView extends Button {
     private long mEndTime;
     private long mStartTime;
     private String mTitle;
+    private boolean mAllDay;
     public EventView(Context context, long startTime, long endTime, String title, int color) {
         super(context);
         LayerDrawable drawable = (LayerDrawable)context.getResources().getDrawable(R.drawable.btn_block);
@@ -24,8 +25,17 @@ public class EventView extends Button {
         setBackgroundDrawable(drawable);
     }
 
+    public void setAllDay(boolean isAllDay) {
+        mAllDay = isAllDay;
+    }
+
+    public boolean getAllDay() {
+        return mAllDay;
+    }
+
     public void setTitle(String title) {
         mTitle = title;
+        this.setText(mTitle);
     }
 
     public String getTitle() {

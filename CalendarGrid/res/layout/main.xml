@@ -15,11 +15,10 @@
         mmcalendar:should_show_calendar_arrows="true"
         mmcalendar:left_arrow_drawable="@drawable/arrow_left"
         mmcalendar:right_arrow_drawable="@drawable/arrow_right"
-        mmcalendar:calendar_name="krasi.karamazov@gmail.com"
         mmcalendar:current_date_background_drawable="@drawable/cell_bg"
         mmcalendar:previous_month_dates_background_drawable="@drawable/calendar_item_backgorund_not_in_month"
         mmcalendar:next_month_dates_background_drawable="@drawable/calendar_item_backgorund_not_in_month"
-        mmcalendar:events_display_type="dialog"
+        mmcalendar:events_display_type="dayview"
         mmcalendar:event_dates_drawable="@drawable/ribbon"
         mmcalendar:dates_from_current_month_background_drawable="@drawable/cell_bg"/>
 </RelativeLayout>
